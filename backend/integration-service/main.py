@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from typing import List, Dict
+from fastapi import FastAPI, Query
+from typing import List, Optional
 
 # Inisialisasi aplikasi
 app = FastAPI(title="Integration Service (Mock API)")
@@ -77,3 +77,34 @@ def get_hotels():
 def get_flights():
     """Mengembalikan daftar semua penerbangan"""
     return MOCK_FLIGHTS
+
+@app.get("/hotels")
+def get_hotels(location: Optional[str] = None):
+    """
+    Mengambil data hotel. 
+    Bisa difilter pakai ?location=Bali
+    """
+    if location:
+        # Filter data: Ambil hotel yang lokasinya cocok (case insensitive)
+        filtered_hotels = [
+            h for h in MOCK_HOTELS 
+            if h["location"].lower() == location.lower()
+        ]
+        return filtered_hotels
+    return MOCK_HOTELS
+
+@app.get("/flights")
+def get_flights(destination: Optional[str] = None, origin: Optional[str] = None):
+    """
+    Mengambil data penerbangan.
+    Bisa difilter pakai ?destination=DPS atau ?origin=CGK
+    """
+    results = MOCK_FLIGHTS
+    
+    if destination:
+        results = [f for f in results if f["destination"].lower() == destination.lower()]
+    
+    if origin:
+        results = [f for f in results if f["origin"].lower() == origin.lower()]
+        
+    return results
