@@ -1,14 +1,10 @@
-from fastapi import FastAPI, Query
 from typing import List, Optional
+from fastapi import FastAPI, Query
 
-# Inisialisasi aplikasi
 app = FastAPI(title="Integration Service (Mock API)")
 
-# ==========================================
-# DATA DUMMY (MOCK DATA)
-# ==========================================
-
-# Data Hotel (Sesuai skema di docs/api-contracts)
+# TODO: Migrasi data statis ini ke dalam Database terpisah sesuai dengan desain arsitektur (Sub-bab 3.2.4).
+# Penggunaan mock data ini bersifat sementara untuk menjamin validasi "Eksperimen Anti-Halusinasi" pada tahap pengujian.
 MOCK_HOTELS = [
     {
         "hotel_id": "HTL-001",
@@ -30,7 +26,6 @@ MOCK_HOTELS = [
     }
 ]
 
-# Data Penerbangan (Sesuai skema di docs/api-contracts)
 MOCK_FLIGHTS = [
     {
         "flight_id": "GA-402",
@@ -56,12 +51,9 @@ MOCK_FLIGHTS = [
     }
 ]
 
-# ==========================================
-# ENDPOINTS (PINTU MASUK API)
-# ==========================================
-
 @app.get("/")
 def read_root():
+    """Health check endpoint for the Integration Service."""
     return {
         "service": "Integration Service",
         "status": "active",
@@ -69,36 +61,18 @@ def read_root():
     }
 
 @app.get("/hotels")
-def get_hotels():
-    """Mengembalikan daftar semua hotel"""
-    return MOCK_HOTELS
-
-@app.get("/flights")
-def get_flights():
-    """Mengembalikan daftar semua penerbangan"""
-    return MOCK_FLIGHTS
-
-@app.get("/hotels")
 def get_hotels(location: Optional[str] = None):
-    """
-    Mengambil data hotel. 
-    Bisa difilter pakai ?location=Bali
-    """
+    """Retrieve hotel data, optionally filtered by location."""
     if location:
-        # Filter data: Ambil hotel yang lokasinya cocok (case insensitive)
-        filtered_hotels = [
+        return [
             h for h in MOCK_HOTELS 
             if h["location"].lower() == location.lower()
         ]
-        return filtered_hotels
     return MOCK_HOTELS
 
 @app.get("/flights")
 def get_flights(destination: Optional[str] = None, origin: Optional[str] = None):
-    """
-    Mengambil data penerbangan.
-    Bisa difilter pakai ?destination=DPS atau ?origin=CGK
-    """
+    """Retrieve flight data, optionally filtered by origin and destination."""
     results = MOCK_FLIGHTS
     
     if destination:
