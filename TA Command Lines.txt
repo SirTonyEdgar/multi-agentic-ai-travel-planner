@@ -1,0 +1,98 @@
+============================================================
+  MULTI-AGENT AI TRAVEL PLANNER — COMMAND CHEAT SHEET
+============================================================
+
+URUTAN MENGHIDUPKAN SERVER (jalankan satu per satu, beda terminal):
+
+------------------------------------------------------------
+STEP 1 — MOCK API (port 8002)
+------------------------------------------------------------
+cd backend/mock-api
+venv\Scripts\activate
+uvicorn main:app --port 8002
+
+------------------------------------------------------------
+STEP 2 — INTEGRATION SERVICE (port 8000)
+------------------------------------------------------------
+cd backend/integration-service
+venv\Scripts\activate
+uvicorn main:app --port 8000
+
+------------------------------------------------------------
+STEP 3 — ORCHESTRATOR SERVICE (port 8001)
+------------------------------------------------------------
+cd backend/orchestrator-service
+venv\Scripts\activate
+uvicorn main:app --port 8001
+
+------------------------------------------------------------
+STEP 4 — API GATEWAY (port 8080)
+------------------------------------------------------------
+cd backend/api-gateway
+venv\Scripts\activate
+uvicorn main:app --port 8080
+
+============================================================
+  TEST — MOCK API LANGSUNG (browser)
+============================================================
+
+http://127.0.0.1:8002/flights?origin=CGK&destination=DPS
+http://127.0.0.1:8002/flights?origin=SUB&destination=DPS
+http://127.0.0.1:8002/hotels?location=Bali
+http://127.0.0.1:8002/hotels?location=Bali&max_price=500000
+http://127.0.0.1:8002/activities?location=Bali
+http://127.0.0.1:8002/activities?location=Bali&category=wisata
+http://127.0.0.1:8002/activities?location=Bali&category=kuliner
+http://127.0.0.1:8002/activities?location=Bali&category=ibadah
+
+============================================================
+  TEST — INTEGRATION SERVICE LANGSUNG (browser)
+============================================================
+
+http://127.0.0.1:8000/flights?origin=CGK&destination=DPS
+http://127.0.0.1:8000/hotels?location=Bali
+http://127.0.0.1:8000/activities?location=Bali&category=wisata
+
+============================================================
+  TEST — FULL FLOW VIA API GATEWAY (browser)
+============================================================
+
+http://127.0.0.1:8080/api/chat?query=Carikan tiket CGK ke Bali dan hotel di Kuta budget 500 ribu
+http://127.0.0.1:8080/api/chat?query=Carikan saya tiket pesawat dari CGK ke DPS
+http://127.0.0.1:8080/api/chat?query=Saya mau liburan ke Bali dari Jakarta, carikan tiket termurah, hotel budget 600 ribu, dan rekomendasi wisata
+http://127.0.0.1:8080/api/chat?query=Rekomendasikan tempat makan enak di Bali
+http://127.0.0.1:8080/api/chat?query=Ada masjid apa saja di Bali?
+
+============================================================
+  INSTALL DEPENDENCIES (sekali saja per service)
+============================================================
+
+cd backend/mock-api
+pip install fastapi uvicorn
+
+cd backend/integration-service
+pip install fastapi uvicorn httpx
+
+cd backend/orchestrator-service
+pip install fastapi uvicorn httpx python-dotenv langchain langchain-google-genai
+
+cd backend/api-gateway
+pip install fastapi uvicorn httpx
+
+============================================================
+  CATATAN
+============================================================
+
+- Urutan wajib: 8002 -> 8000 -> 8001 -> 8080
+- File .env wajib ada di backend/orchestrator-service/
+  isi: GOOGLE_API_KEY=isi_api_key_kamu
+
+- Port summary:
+  8002 = Mock API
+  8000 = Integration Service
+  8001 = Orchestrator Service
+  8080 = API Gateway
+
+- Swagger docs tiap service: http://127.0.0.1:PORT/docs
+
+============================================================
