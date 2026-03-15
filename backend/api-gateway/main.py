@@ -1,39 +1,34 @@
-from fastapi import FastAPI, HTTPException
 import httpx
+from fastapi import FastAPI, HTTPException, Query
 
-app = FastAPI(title="API Gateway Service")
+app = FastAPI(title="API Gateway", version="1.0.0")
 
 ORCHESTRATOR_URL = "http://127.0.0.1:8001"
 
+
 @app.get("/")
-def read_root():
-    """Health check endpoint for the API Gateway."""
-    return {"status": "API Gateway Ready", "message": "Selamat datang di Travel Planner API Gateway"}
+def health_check():
+    return {"status": "API Gateway Ready"}
+
 
 @app.get("/api/chat")
-async def chat_with_ai(query: str):
-    """
-    Main entry point for the frontend client.
-    Asynchronously forwards the natural language query to the Orchestrator Service.
-    """
-    # TODO: Integrasi pengecekan Auth Service sesuai desain arsitektur (Sub-bab 3.2.1).
-    # Validate user token before forwarding request to the AI logic.
-    
-    try:
-        async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.get(f"{ORCHESTRATOR_URL}/plan-trip", params={"query": query})
-            
-            if response.status_code == 200:
-                return response.json()
-                
-            raise HTTPException(
-                status_code=response.status_code, 
-                detail=f"Orchestrator Error ({response.status_code}): {response.text}"
+async def chat(query: str = Query(...), session_id: str | None = None):
+    async with httpx.AsyncClient(timeout=120.0) as client:
+        try:
+            response = await client.post(
+                f"{ORCHESTRATOR_URL}/plan-trip",
+                json={"query": query, "session_id": session_id}
             )
-            
-    except httpx.RequestError as e:
-        # Enforcing fault isolation mechanism
+        except httpx.RequestError as e:
+            raise HTTPException(
+                status_code=503,
+                detail=f"Orchestrator unavailable: {str(e)}"
+            )
+
+    if response.status_code != 200:
         raise HTTPException(
-            status_code=503, 
-            detail=f"Service Unavailable: Tidak dapat terhubung ke Orchestrator. Error: {str(e)}"
+            status_code=response.status_code,
+            detail=response.json().get("detail", "Orchestrator error")
         )
+
+    return response.json()

@@ -1,0 +1,121 @@
+{
+  "flights": [
+    {
+      "id": "FL001",
+      "airline": "Garuda Indonesia",
+      "flight_number": "GA-406",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departure": "06:00",
+      "arrival": "08:55",
+      "duration_minutes": 115,
+      "price": 850000,
+      "class": "Economy",
+      "seats_available": 12
+    },
+    {
+      "id": "FL002",
+      "airline": "Lion Air",
+      "flight_number": "JT-008",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departure": "09:30",
+      "arrival": "12:20",
+      "duration_minutes": 110,
+      "price": 450000,
+      "class": "Economy",
+      "seats_available": 34
+    },
+    {
+      "id": "FL003",
+      "airline": "Citilink",
+      "flight_number": "QG-712",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departure": "13:00",
+      "arrival": "15:50",
+      "duration_minutes": 110,
+      "price": 420000,
+      "class": "Economy",
+      "seats_available": 8
+    },
+    {
+      "id": "FL004",
+      "airline": "Garuda Indonesia",
+      "flight_number": "GA-412",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departure": "18:30",
+      "arrival": "21:25",
+      "duration_minutes": 115,
+      "price": 920000,
+      "class": "Economy",
+      "seats_available": 5
+    },
+    {
+      "id": "FL005",
+      "airline": "Batik Air",
+      "flight_number": "ID-6895",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departure": "21:00",
+      "arrival": "23:50",
+      "duration_minutes": 110,
+      "price": 510000,
+      "class": "Economy",
+      "seats_available": 20
+    },
+    {
+      "id": "FL006",
+      "airline": "Garuda Indonesia",
+      "flight_number": "GA-302",
+      "origin": "SUB",
+      "destination": "DPS",
+      "departure": "07:00",
+      "arrival": "08:10",
+      "duration_minutes": 70,
+      "price": 380000,
+      "class": "Economy",
+      "seats_available": 15
+    },
+    {
+      "id": "FL007",
+      "airline": "Lion Air",
+      "flight_number": "JT-562",
+      "origin": "SUB",
+      "destination": "DPS",
+      "departure": "11:00",
+      "arrival": "12:15",
+      "duration_minutes": 75,
+      "price": 290000,
+      "class": "Economy",
+      "seats_available": 22
+    },
+    {
+      "id": "FL008",
+      "airline": "Garuda Indonesia",
+      "flight_number": "GA-100",
+      "origin": "CGK",
+      "destination": "LOP",
+      "departure": "08:00",
+      "arrival": "10:30",
+      "duration_minutes": 150,
+      "price": 770000,
+      "class": "Economy",
+      "seats_available": 18
+    },
+    {
+      "id": "FL009",
+      "airline": "Lion Air",
+      "flight_number": "JT-890",
+      "origin": "CGK",
+      "destination": "LOP",
+      "departure": "14:00",
+      "arrival": "16:35",
+      "duration_minutes": 155,
+      "price": 550000,
+      "class": "Economy",
+      "seats_available": 10
+    }
+  ]
+}

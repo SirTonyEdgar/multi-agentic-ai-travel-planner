@@ -1,0 +1,124 @@
+{
+  "hotels": [
+    {
+      "id": "HT001",
+      "name": "The Layar Private Villas",
+      "location": "Bali",
+      "area": "Seminyak",
+      "rating": 4.8,
+      "price_per_night": 1200000,
+      "room_type": "Villa",
+      "facilities": ["kolam renang", "sarapan", "wifi", "AC", "parkir"],
+      "rooms_available": 3,
+      "address": "Jl. Laksmana No.68, Seminyak, Bali"
+    },
+    {
+      "id": "HT002",
+      "name": "Kuta Central Park Hotel",
+      "location": "Bali",
+      "area": "Kuta",
+      "rating": 4.2,
+      "price_per_night": 450000,
+      "room_type": "Deluxe",
+      "facilities": ["kolam renang", "wifi", "AC", "restoran"],
+      "rooms_available": 10,
+      "address": "Jl. Raya Kuta No.88, Kuta, Bali"
+    },
+    {
+      "id": "HT003",
+      "name": "Alaya Resort Ubud",
+      "location": "Bali",
+      "area": "Ubud",
+      "rating": 4.9,
+      "price_per_night": 2100000,
+      "room_type": "Suite",
+      "facilities": ["kolam renang infinity", "sarapan", "spa", "wifi", "shuttle"],
+      "rooms_available": 2,
+      "address": "Jl. Hanoman No.26, Ubud, Bali"
+    },
+    {
+      "id": "HT004",
+      "name": "Ibis Bali Kuta",
+      "location": "Bali",
+      "area": "Kuta",
+      "rating": 3.9,
+      "price_per_night": 320000,
+      "room_type": "Standard",
+      "facilities": ["wifi", "AC", "restoran", "parkir"],
+      "rooms_available": 25,
+      "address": "Jl. Wastu Citra No.10, Kuta, Bali"
+    },
+    {
+      "id": "HT005",
+      "name": "Nusa Dua Beach Hotel & Spa",
+      "location": "Bali",
+      "area": "Nusa Dua",
+      "rating": 4.6,
+      "price_per_night": 1800000,
+      "room_type": "Deluxe Ocean View",
+      "facilities": ["pantai pribadi", "kolam renang", "spa", "sarapan", "wifi"],
+      "rooms_available": 7,
+      "address": "Kawasan BTDC Blok A, Nusa Dua, Bali"
+    },
+    {
+      "id": "HT006",
+      "name": "Ayana Resort Bali",
+      "location": "Bali",
+      "area": "Jimbaran",
+      "rating": 4.9,
+      "price_per_night": 3500000,
+      "room_type": "Suite",
+      "facilities": ["rock bar", "kolam renang", "spa", "sarapan", "wifi", "private beach"],
+      "rooms_available": 1,
+      "address": "Jl. Karang Mas Sejahtera, Jimbaran, Bali"
+    },
+    {
+      "id": "HT007",
+      "name": "Lombok Raya Hotel",
+      "location": "Lombok",
+      "area": "Mataram",
+      "rating": 4.0,
+      "price_per_night": 380000,
+      "room_type": "Superior",
+      "facilities": ["kolam renang", "wifi", "AC", "restoran"],
+      "rooms_available": 14,
+      "address": "Jl. Bung Karno No.8, Mataram, Lombok"
+    },
+    {
+      "id": "HT008",
+      "name": "Jeeva Klui Resort",
+      "location": "Lombok",
+      "area": "Senggigi",
+      "rating": 4.7,
+      "price_per_night": 1500000,
+      "room_type": "Bungalow",
+      "facilities": ["pantai", "kolam renang", "sarapan", "wifi", "restoran"],
+      "rooms_available": 4,
+      "address": "Jl. Raya Senggigi, Lombok Barat"
+    },
+    {
+      "id": "HT009",
+      "name": "Swiss-Belhotel Yogyakarta",
+      "location": "Yogyakarta",
+      "area": "Malioboro",
+      "rating": 4.3,
+      "price_per_night": 520000,
+      "room_type": "Deluxe",
+      "facilities": ["kolam renang", "wifi", "AC", "restoran", "dekat malioboro"],
+      "rooms_available": 18,
+      "address": "Jl. Mayor Suryotomo No.18, Yogyakarta"
+    },
+    {
+      "id": "HT010",
+      "name": "The Phoenix Hotel Yogyakarta",
+      "location": "Yogyakarta",
+      "area": "Jalan Solo",
+      "rating": 4.5,
+      "price_per_night": 780000,
+      "room_type": "Heritage Room",
+      "facilities": ["kolam renang", "sarapan", "spa", "wifi", "restoran"],
+      "rooms_available": 9,
+      "address": "Jl. Jendral Sudirman No.9, Yogyakarta"
+    }
+  ]
+}
