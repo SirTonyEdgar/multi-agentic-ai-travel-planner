@@ -2,7 +2,25 @@
   MULTI-AGENT AI TRAVEL PLANNER — COMMAND CHEAT SHEET
 ============================================================
 
+============================================================
+  INSTALL DEPENDENCIES (sekali saja per service)
+============================================================
+
+cd backend/mock-api
+pip install -r requirements.txt
+
+cd backend/integration-service
+pip install -r requirements.txt
+
+cd backend/orchestrator-service
+pip install -r requirements.txt
+
+cd backend/api-gateway
+pip install -r requirements.txt
+
+============================================================
 URUTAN MENGHIDUPKAN SERVER (jalankan satu per satu, beda terminal):
+============================================================
 
 ------------------------------------------------------------
 STEP 1 — MOCK API (port 8002)
@@ -62,22 +80,6 @@ http://127.0.0.1:8080/api/chat?query=Carikan saya tiket pesawat dari CGK ke DPS
 http://127.0.0.1:8080/api/chat?query=Saya mau liburan ke Bali dari Jakarta, carikan tiket termurah, hotel budget 600 ribu, dan rekomendasi wisata
 http://127.0.0.1:8080/api/chat?query=Rekomendasikan tempat makan enak di Bali
 http://127.0.0.1:8080/api/chat?query=Ada masjid apa saja di Bali?
-
-============================================================
-  INSTALL DEPENDENCIES (sekali saja per service)
-============================================================
-
-cd backend/mock-api
-pip install fastapi uvicorn
-
-cd backend/integration-service
-pip install fastapi uvicorn httpx
-
-cd backend/orchestrator-service
-pip install fastapi uvicorn httpx python-dotenv langchain langchain-google-genai
-
-cd backend/api-gateway
-pip install fastapi uvicorn httpx
 
 ============================================================
   CATATAN

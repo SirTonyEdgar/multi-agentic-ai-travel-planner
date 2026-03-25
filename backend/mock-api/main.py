@@ -138,3 +138,18 @@ def get_activities(
         "total_results": len(results),
         "activities": results
     }
+
+# ── Transport ──────────────────────────────────────────────────────────────
+@app.get("/transport")
+def get_transport(
+    location: str = Query(...),
+    type: str = Query(None)
+):
+    data = load_data("transport.json")
+    location_clean = location.strip().lower()
+    results = [t for t in data["transports"] if location_clean in t["location"].lower()]
+    if type:
+        results = [t for t in results if t["type"].lower() == type.strip().lower()]
+    if not results:
+        raise HTTPException(status_code=404, detail=f"Tidak ada transportasi tersedia di lokasi '{location}'. Sistem tidak diperbolehkan menebak atau mengarang data transportasi.")
+    return {"location": location, "type_filter": type, "total_results": len(results), "transports": results}

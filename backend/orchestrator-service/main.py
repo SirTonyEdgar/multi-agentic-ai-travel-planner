@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain import hub
-from tools import cari_hotel, cari_penerbangan, cari_aktivitas
+from tools import cari_hotel, cari_penerbangan, cari_aktivitas, cari_transport
 
 load_dotenv()
 
@@ -20,7 +20,7 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=GOOGLE_API_KEY
 )
 
-tools = [cari_penerbangan, cari_hotel, cari_aktivitas]
+tools = [cari_penerbangan, cari_hotel, cari_aktivitas, cari_transport]
 
 prompt = hub.pull("hwchase17/react")
 

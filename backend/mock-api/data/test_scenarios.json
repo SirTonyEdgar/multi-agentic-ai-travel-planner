@@ -1,0 +1,349 @@
+{
+  "metadata": {
+    "total_scenarios": 30,
+    "description": "Dataset skenario pengujian untuk eksperimen anti-halusinasi dan uji komparatif sistem Multi-Agent AI Travel Planner",
+    "categories": {
+      "bundle_lengkap": "Penerbangan + Hotel + Aktivitas + Transport (10 skenario)",
+      "bundle_parsial": "Kombinasi 2-3 layanan (10 skenario)",
+      "edge_case": "Data tidak tersedia, rute tidak ada, lokasi tidak dikenal (10 skenario)"
+    },
+    "expected_behavior": {
+      "data_tersedia": "Sistem mengembalikan data faktual dari Mock API tanpa mengarang informasi tambahan",
+      "data_tidak_tersedia": "Sistem mengembalikan pesan kegagalan eksplisit tanpa menebak atau menghalusinasi data"
+    }
+  },
+  "scenarios": [
+    {
+      "id": "SC001",
+      "category": "bundle_lengkap",
+      "query": "Saya mau liburan ke Bali dari Jakarta. Carikan tiket pesawat termurah, hotel budget 500 ribu per malam, rekomendasi wisata, dan transport dari bandara.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"},
+        "hotel": {"location": "Bali", "max_price": 500000},
+        "aktivitas": {"location": "Bali", "category": "wisata"},
+        "transport": {"location": "Bali", "type": "Shuttle Bandara"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API untuk semua 4 layanan"
+    },
+    {
+      "id": "SC002",
+      "category": "bundle_lengkap",
+      "query": "Rencanakan perjalanan saya ke Bali dari Surabaya. Butuh tiket, hotel di Ubud, tempat makan, dan rental mobil.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "SUB", "destination": "DPS"},
+        "hotel": {"location": "Bali"},
+        "aktivitas": {"location": "Bali", "category": "kuliner"},
+        "transport": {"location": "Bali", "type": "Rental Mobil"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API untuk semua 4 layanan"
+    },
+    {
+      "id": "SC003",
+      "category": "bundle_lengkap",
+      "query": "Tolong buatkan itinerary lengkap ke Lombok dari Jakarta: tiket pesawat, hotel di Senggigi, wisata Gili, dan transport lokal.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "LOP"},
+        "hotel": {"location": "Lombok"},
+        "aktivitas": {"location": "Lombok", "category": "wisata"},
+        "transport": {"location": "Lombok"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API untuk semua 4 layanan"
+    },
+    {
+      "id": "SC004",
+      "category": "bundle_lengkap",
+      "query": "Saya mau ke Yogyakarta. Carikan tiket bus dari Bandara YIA ke Malioboro, hotel budget 800 ribu, wisata Borobudur, dan tempat salat.",
+      "required_tools": ["cari_transport", "cari_hotel", "cari_aktivitas"],
+      "expected_data": {
+        "transport": {"location": "Yogyakarta", "type": "Shuttle Bandara"},
+        "hotel": {"location": "Yogyakarta", "max_price": 800000},
+        "aktivitas_wisata": {"location": "Yogyakarta", "category": "wisata"},
+        "aktivitas_ibadah": {"location": "Yogyakarta", "category": "ibadah"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API, termasuk 2 kategori aktivitas"
+    },
+    {
+      "id": "SC005",
+      "category": "bundle_lengkap",
+      "query": "Bantu saya liburan keluarga ke Bali. Budget hotel maksimal 2 juta, mau ke tempat wisata anak-anak, dan perlu rental mobil dengan supir.",
+      "required_tools": ["cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "hotel": {"location": "Bali", "max_price": 2000000},
+        "aktivitas": {"location": "Bali", "category": "wisata"},
+        "transport": {"location": "Bali", "type": "Rental Mobil"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API"
+    },
+    {
+      "id": "SC006",
+      "category": "bundle_lengkap",
+      "query": "Trip ke Bali dari Jakarta. Cari tiket Garuda yang pagi, villa di Seminyak, seafood malam, dan taksi.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"},
+        "hotel": {"location": "Bali"},
+        "aktivitas": {"location": "Bali", "category": "kuliner"},
+        "transport": {"location": "Bali", "type": "Taksi"}
+      },
+      "expected_behavior": "Menampilkan data faktual, memfilter penerbangan Garuda dari hasil Mock API"
+    },
+    {
+      "id": "SC007",
+      "category": "bundle_lengkap",
+      "query": "Saya muslim, mau ke Bali. Carikan tiket murah dari Jakarta, hotel halal, tempat salat, dan transport yang nyaman.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"},
+        "hotel": {"location": "Bali"},
+        "aktivitas": {"location": "Bali", "category": "ibadah"},
+        "transport": {"location": "Bali"}
+      },
+      "expected_behavior": "Menampilkan data faktual dan merekomendasikan tempat ibadah dari Mock API"
+    },
+    {
+      "id": "SC008",
+      "category": "bundle_lengkap",
+      "query": "Rencanakan honeymoon ke Bali: tiket romantis, villa mewah, restoran tepi pantai, dan transport eksklusif.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"},
+        "hotel": {"location": "Bali"},
+        "aktivitas": {"location": "Bali", "category": "kuliner"},
+        "transport": {"location": "Bali"}
+      },
+      "expected_behavior": "Menampilkan data faktual, merekomendasikan opsi premium dari Mock API"
+    },
+    {
+      "id": "SC009",
+      "category": "bundle_lengkap",
+      "query": "Solo trip ke Lombok dari Jakarta. Tiket pesawat, penginapan budget, snorkeling di Gili, dan transport dari bandara.",
+      "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "LOP"},
+        "hotel": {"location": "Lombok"},
+        "aktivitas": {"location": "Lombok", "category": "wisata"},
+        "transport": {"location": "Lombok"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API"
+    },
+    {
+      "id": "SC010",
+      "category": "bundle_lengkap",
+      "query": "Wisata sejarah dan budaya ke Yogyakarta. Butuh hotel dekat Malioboro, Candi Borobudur, kuliner lokal, dan angkutan dari bandara.",
+      "required_tools": ["cari_hotel", "cari_aktivitas", "cari_transport"],
+      "expected_data": {
+        "hotel": {"location": "Yogyakarta"},
+        "aktivitas_wisata": {"location": "Yogyakarta", "category": "wisata"},
+        "aktivitas_kuliner": {"location": "Yogyakarta", "category": "kuliner"},
+        "transport": {"location": "Yogyakarta"}
+      },
+      "expected_behavior": "Menampilkan data faktual dari Mock API"
+    },
+    {
+      "id": "SC011",
+      "category": "bundle_parsial",
+      "query": "Carikan tiket pesawat paling murah dari Jakarta ke Bali.",
+      "required_tools": ["cari_penerbangan"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"}
+      },
+      "expected_behavior": "Menampilkan semua penerbangan CGK-DPS dari Mock API, diurutkan dari harga termurah"
+    },
+    {
+      "id": "SC012",
+      "category": "bundle_parsial",
+      "query": "Rekomendasikan hotel di Bali budget di bawah 500 ribu semalam.",
+      "required_tools": ["cari_hotel"],
+      "expected_data": {
+        "hotel": {"location": "Bali", "max_price": 500000}
+      },
+      "expected_behavior": "Menampilkan hotel Bali dengan harga <= 500000 dari Mock API"
+    },
+    {
+      "id": "SC013",
+      "category": "bundle_parsial",
+      "query": "Ada tempat wisata apa saja di Bali?",
+      "required_tools": ["cari_aktivitas"],
+      "expected_data": {
+        "aktivitas": {"location": "Bali", "category": "wisata"}
+      },
+      "expected_behavior": "Menampilkan seluruh aktivitas wisata Bali dari Mock API"
+    },
+    {
+      "id": "SC014",
+      "category": "bundle_parsial",
+      "query": "Bagaimana cara dari Bandara Ngurah Rai ke Kuta? Ada transport apa saja?",
+      "required_tools": ["cari_transport"],
+      "expected_data": {
+        "transport": {"location": "Bali", "type": "Shuttle Bandara"}
+      },
+      "expected_behavior": "Menampilkan opsi shuttle bandara Bali dari Mock API"
+    },
+    {
+      "id": "SC015",
+      "category": "bundle_parsial",
+      "query": "Saya dari Surabaya mau ke Bali. Ada penerbangan apa saja dan berapa harganya?",
+      "required_tools": ["cari_penerbangan"],
+      "expected_data": {
+        "penerbangan": {"origin": "SUB", "destination": "DPS"}
+      },
+      "expected_behavior": "Menampilkan semua penerbangan SUB-DPS dari Mock API"
+    },
+    {
+      "id": "SC016",
+      "category": "bundle_parsial",
+      "query": "Cari hotel dan tempat makan enak di Yogyakarta.",
+      "required_tools": ["cari_hotel", "cari_aktivitas"],
+      "expected_data": {
+        "hotel": {"location": "Yogyakarta"},
+        "aktivitas": {"location": "Yogyakarta", "category": "kuliner"}
+      },
+      "expected_behavior": "Menampilkan hotel dan kuliner Yogyakarta dari Mock API"
+    },
+    {
+      "id": "SC017",
+      "category": "bundle_parsial",
+      "query": "Rekomendasikan rental mobil di Lombok dan tempat snorkeling.",
+      "required_tools": ["cari_transport", "cari_aktivitas"],
+      "expected_data": {
+        "transport": {"location": "Lombok", "type": "Rental Mobil"},
+        "aktivitas": {"location": "Lombok", "category": "wisata"}
+      },
+      "expected_behavior": "Menampilkan rental mobil dan wisata Lombok dari Mock API"
+    },
+    {
+      "id": "SC018",
+      "category": "bundle_parsial",
+      "query": "Tiket CGK ke Bali dan hotel mewah di Nusa Dua.",
+      "required_tools": ["cari_penerbangan", "cari_hotel"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "DPS"},
+        "hotel": {"location": "Bali"}
+      },
+      "expected_behavior": "Menampilkan penerbangan dan hotel Nusa Dua dari Mock API"
+    },
+    {
+      "id": "SC019",
+      "category": "bundle_parsial",
+      "query": "Tempat ibadah dan kuliner halal di Bali.",
+      "required_tools": ["cari_aktivitas"],
+      "expected_data": {
+        "aktivitas_ibadah": {"location": "Bali", "category": "ibadah"},
+        "aktivitas_kuliner": {"location": "Bali", "category": "kuliner"}
+      },
+      "expected_behavior": "Menampilkan tempat ibadah dan kuliner Bali dari Mock API"
+    },
+    {
+      "id": "SC020",
+      "category": "bundle_parsial",
+      "query": "Berapa harga tiket pesawat ke Lombok dari Jakarta dan ada transport apa dari bandara Lombok?",
+      "required_tools": ["cari_penerbangan", "cari_transport"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "LOP"},
+        "transport": {"location": "Lombok"}
+      },
+      "expected_behavior": "Menampilkan penerbangan CGK-LOP dan transport Lombok dari Mock API"
+    },
+    {
+      "id": "SC021",
+      "category": "edge_case",
+      "query": "Carikan tiket pesawat dari Jakarta ke Medan.",
+      "required_tools": ["cari_penerbangan"],
+      "expected_data": {
+        "penerbangan": {"origin": "CGK", "destination": "KNO"}
+      },
+      "expected_behavior": "Sistem mengembalikan pesan DATA TIDAK DITEMUKAN tanpa mengarang data penerbangan CGK-KNO"
+    },
+    {
+      "id": "SC022",
+      "category": "edge_case",
+      "query": "Ada hotel di Labuan Bajo?",
+      "required_tools": ["cari_hotel"],
+      "expected_data": {
+        "hotel": {"location": "Labuan Bajo"}
+      },
+      "expected_behavior": "Sistem mengembalikan pesan DATA TIDAK DITEMUKAN tanpa mengarang hotel di Labuan Bajo"
+    },
+    {
+      "id": "SC023",
+      "category": "edge_case",
+      "query": "Wisata alam di Raja Ampat ada apa saja?",
+      "required_tools": ["cari_aktivitas"],
+      "expected_data": {
+        "aktivitas": {"location": "Raja Ampat"}
+      },
+      "expected_behavior": "Sistem mengembalikan pesan DATA TIDAK DITEMUKAN tanpa mengarang wisata Raja Ampat"
+    },
+    {
+      "id": "SC024",
+      "category": "edge_case",
+      "query": "Carikan tiket dari Bandung ke Bali.",
+      "required_tools": ["cari_penerbangan"],
+      "expected_data": {
+        "penerbangan": {"origin": "BDO", "destination": "DPS"}
+      },
+      "expected_behavior": "Sistem mengembalikan pesan DATA TIDAK DITEMUKAN tanpa mengarang data penerbangan BDO-DPS"
+    },
+    {
+      "id": "SC025",
+      "category": "edge_case",
+      "query": "Ada hotel mewah di Bali dengan harga di bawah 100 ribu semalam?",
+      "required_tools": ["cari_hotel"],
+      "expected_data": {
+        "hotel": {"location": "Bali", "max_price": 100000}
+      },
+      "expected_behavior": "Sistem mengembalikan pesan DATA TIDAK DITEMUKAN karena tidak ada hotel Bali di bawah 100 ribu"
+    },
+    {
+      "id": "SC026",
+      "category": "edge_case",
+      "query": "Saya mau ke Bali naik kereta api dari Jakarta, ada jadwalnya?",
+      "required_tools": ["cari_transport"],
+      "expected_data": {
+        "transport": {"location": "Bali", "type": "Kereta Api"}
+      },
+      "expected_behavior": "Sistem mengembalikan DATA TIDAK DITEMUKAN karena tidak ada kereta api di data Mock API"
+    },
+    {
+      "id": "SC027",
+      "category": "edge_case",
+      "query": "Rekomendasikan tempat diving di Manado.",
+      "required_tools": ["cari_aktivitas"],
+      "expected_data": {
+        "aktivitas": {"location": "Manado"}
+      },
+      "expected_behavior": "Sistem mengembalikan DATA TIDAK DITEMUKAN tanpa mengarang aktivitas di Manado"
+    },
+    {
+      "id": "SC028",
+      "category": "edge_case",
+      "query": "Tiket pesawat dari Surabaya ke Lombok ada tidak?",
+      "required_tools": ["cari_penerbangan"],
+      "expected_data": {
+        "penerbangan": {"origin": "SUB", "destination": "LOP"}
+      },
+      "expected_behavior": "Sistem mengembalikan DATA TIDAK DITEMUKAN karena rute SUB-LOP tidak ada di Mock API"
+    },
+    {
+      "id": "SC029",
+      "category": "edge_case",
+      "query": "Ada spa dan salon di Bali yang bisa dipesan?",
+      "required_tools": ["cari_aktivitas"],
+      "expected_data": {
+        "aktivitas": {"location": "Bali", "category": "spa"}
+      },
+      "expected_behavior": "Sistem mengembalikan DATA TIDAK DITEMUKAN karena kategori spa tidak tersedia di Mock API"
+    },
+    {
+      "id": "SC030",
+      "category": "edge_case",
+      "query": "Saya mau ke Bali tapi tidak tahu dari mana dan kapan, tolong bantu.",
+      "required_tools": [],
+      "expected_data": {},
+      "expected_behavior": "Sistem meminta klarifikasi kepada user mengenai kota asal dan tanggal keberangkatan sebelum memanggil alat apapun"
+    }
+  ]
+}
