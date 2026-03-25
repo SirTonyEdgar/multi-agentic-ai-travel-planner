@@ -187,3 +187,62 @@ def cari_aktivitas(query: str) -> str:
             f"Koneksi ke Mock API gagal: {str(e)}. "
             f"Pastikan Mock API berjalan di port 8002."
         )
+    
+@tool
+def cari_transport(query: str) -> str:
+    """
+    Gunakan alat ini untuk mencari transportasi lokal di destinasi wisata.
+    Format: "LOKASI" atau "LOKASI,JENIS"
+    Jenis yang tersedia: Shuttle Bandara, Rental Mobil, Rental Motor, Taksi
+    Contoh: "Bali" atau "Bali,Shuttle Bandara" atau "Yogyakarta,Rental Mobil"
+
+    Lokasi yang tersedia: Bali, Lombok, Yogyakarta.
+    """
+    try:
+        lokasi = query.strip()
+        jenis = None
+
+        if "," in query:
+            parts = query.split(",", 1)
+            lokasi = parts[0].strip()
+            jenis = parts[1].strip()
+
+        print(f"[TOOL] cari_transport: lokasi={lokasi}, jenis={jenis}")
+
+        params = {"location": lokasi}
+        if jenis:
+            params["type"] = jenis
+
+        with httpx.Client(timeout=10.0) as client:
+            response = client.get(f"{MOCK_API_URL}/transport", params=params)
+
+        if response.status_code == 200:
+            data = response.json()
+            transports = data.get("transports", [])
+            if not transports:
+                return f"Tidak ada transportasi tersedia di {lokasi}."
+
+            label = f" (jenis: {jenis})" if jenis else ""
+            result = f"Transportasi di {lokasi}{label} ({data['total_results']} tersedia):\n"
+            for t in transports:
+                harga = f"Rp {t['price']:,}"
+                if t.get("notes"):
+                    harga += f" ({t['notes']})"
+                result += (
+                    f"- [{t['id']}] {t['type']} | {t['provider']} | "
+                    f"Rute: {t['origin']} → {t['destination']} | "
+                    f"Harga: {harga} | Jam: {t['open_hours']}\n"
+                )
+            return result
+
+        elif response.status_code == 404:
+            detail = response.json().get("detail", "")
+            return f"DATA TIDAK DITEMUKAN: {detail}"
+
+        return f"Error dari Mock API: HTTP {response.status_code}"
+
+    except httpx.RequestError as e:
+        return (
+            f"Koneksi ke Mock API gagal: {str(e)}. "
+            f"Pastikan Mock API berjalan di port 8002."
+        )
