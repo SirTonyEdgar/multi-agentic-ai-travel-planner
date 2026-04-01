@@ -1,0 +1,28 @@
+services:
+  mock-api:
+    build: ./backend/mock-api
+    ports:
+      - "8002:8002"
+
+  integration-service:
+    build: ./backend/integration-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mock-api
+
+  orchestrator-service:
+    build: ./backend/orchestrator-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      - mock-api
+    env_file:
+      - .env
+
+  api-gateway:
+    build: ./backend/api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - orchestrator-service

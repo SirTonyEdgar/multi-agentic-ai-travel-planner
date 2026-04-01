@@ -3,24 +3,40 @@
 ============================================================
 
 ============================================================
-  INSTALL DEPENDENCIES (sekali saja per service)
+  CARA 1 — DOCKER (direkomendasikan)
 ============================================================
 
-cd backend/mock-api
-pip install -r requirements.txt
+Jalankan semua service sekaligus dari root folder:
 
-cd backend/integration-service
-pip install -r requirements.txt
+  docker-compose up --build
 
-cd backend/orchestrator-service
-pip install -r requirements.txt
+Stop semua service:
 
-cd backend/api-gateway
-pip install -r requirements.txt
+  docker-compose down
+
+Swagger docs via Docker:
+  http://localhost:8002/docs   (Mock API)
+  http://localhost:8000/docs   (Integration Service)
+  http://localhost:8001/docs   (Orchestrator Service)
+  http://localhost:8080/docs   (API Gateway)
+
+Catatan:
+- File .env wajib ada di root folder (sejajar docker-compose.yml)
+  isi: GOOGLE_API_KEY=isi_api_key_kamu
+- Docker Desktop harus jalan sebelum docker-compose up
 
 ============================================================
-URUTAN MENGHIDUPKAN SERVER (jalankan satu per satu, beda terminal):
+  CARA 2 — MANUAL (untuk development)
 ============================================================
+
+Install dependencies (sekali saja per service, dari folder masing-masing):
+
+  cd backend/mock-api && pip install -r requirements.txt
+  cd backend/integration-service && pip install -r requirements.txt
+  cd backend/orchestrator-service && pip install -r requirements.txt
+  cd backend/api-gateway && pip install -r requirements.txt
+
+Jalankan satu per satu di terminal berbeda (urutan wajib):
 
 ------------------------------------------------------------
 STEP 1 — MOCK API (port 8002)
@@ -50,6 +66,11 @@ cd backend/api-gateway
 venv\Scripts\activate
 uvicorn main:app --port 8080
 
+Catatan:
+- File .env wajib ada di backend/orchestrator-service/
+  isi: GOOGLE_API_KEY=isi_api_key_kamu
+- Swagger docs: http://127.0.0.1:PORT/docs
+
 ============================================================
   TEST — MOCK API LANGSUNG (browser)
 ============================================================
@@ -62,6 +83,9 @@ http://127.0.0.1:8002/activities?location=Bali
 http://127.0.0.1:8002/activities?location=Bali&category=wisata
 http://127.0.0.1:8002/activities?location=Bali&category=kuliner
 http://127.0.0.1:8002/activities?location=Bali&category=ibadah
+http://127.0.0.1:8002/transport?location=Bali
+http://127.0.0.1:8002/transport?location=Bali&type=Shuttle Bandara
+http://127.0.0.1:8002/transport?location=Yogyakarta&type=Rental Mobil
 
 ============================================================
   TEST — INTEGRATION SERVICE LANGSUNG (browser)
@@ -70,6 +94,7 @@ http://127.0.0.1:8002/activities?location=Bali&category=ibadah
 http://127.0.0.1:8000/flights?origin=CGK&destination=DPS
 http://127.0.0.1:8000/hotels?location=Bali
 http://127.0.0.1:8000/activities?location=Bali&category=wisata
+http://127.0.0.1:8000/transport?location=Bali
 
 ============================================================
   TEST — FULL FLOW VIA API GATEWAY (browser)
@@ -80,21 +105,16 @@ http://127.0.0.1:8080/api/chat?query=Carikan saya tiket pesawat dari CGK ke DPS
 http://127.0.0.1:8080/api/chat?query=Saya mau liburan ke Bali dari Jakarta, carikan tiket termurah, hotel budget 600 ribu, dan rekomendasi wisata
 http://127.0.0.1:8080/api/chat?query=Rekomendasikan tempat makan enak di Bali
 http://127.0.0.1:8080/api/chat?query=Ada masjid apa saja di Bali?
+http://127.0.0.1:8080/api/chat?query=Saya mau ke Bali, ada transport apa dari bandara?
+http://127.0.0.1:8080/api/chat?query=Carikan tiket CGK ke Bali, hotel budget 500 ribu, dan rental mobil di Bali
 
 ============================================================
-  CATATAN
+  PORT SUMMARY
 ============================================================
 
-- Urutan wajib: 8002 -> 8000 -> 8001 -> 8080
-- File .env wajib ada di backend/orchestrator-service/
-  isi: GOOGLE_API_KEY=isi_api_key_kamu
-
-- Port summary:
-  8002 = Mock API
+  8002 = Mock API (ground truth data)
   8000 = Integration Service
-  8001 = Orchestrator Service
-  8080 = API Gateway
-
-- Swagger docs tiap service: http://127.0.0.1:PORT/docs
+  8001 = Orchestrator Service (AI Agent)
+  8080 = API Gateway (frontend connect ke sini)
 
 ============================================================
