@@ -1,8 +1,7 @@
 import httpx
 from langchain.tools import tool
 
-MOCK_API_URL = "http://127.0.0.1:8002"
-
+MOCK_API_URL = "http://mock-api:8002"
 
 @tool
 def cari_penerbangan(query_rute: str) -> str:
@@ -65,7 +64,6 @@ def cari_penerbangan(query_rute: str) -> str:
             f"Pastikan Mock API berjalan di port 8002."
         )
 
-
 @tool
 def cari_hotel(query: str) -> str:
     """
@@ -125,7 +123,6 @@ def cari_hotel(query: str) -> str:
             f"Koneksi ke Mock API gagal: {str(e)}. "
             f"Pastikan Mock API berjalan di port 8002."
         )
-
 
 @tool
 def cari_aktivitas(query: str) -> str:

@@ -1,6 +1,6 @@
 # Mock API — Travel Planner Ground Truth
 
-Layanan simulasi data pariwisata yang berfungsi sebagai **sumber kebenaran (ground truth)** untuk sistem Multi-Agent AI Travel Planner, sekaligus sebagai backend data untuk clone Traveloka pada frontend service.
+Layanan simulasi data pariwisata yang berfungsi sebagai **sumber kebenaran (ground truth)** untuk sistem Multi-Agent AI Travel Planner, sekaligus sebagai backend data untuk frontend clone Traveloka.
 
 ---
 
@@ -10,100 +10,58 @@ Layanan simulasi data pariwisata yang berfungsi sebagai **sumber kebenaran (grou
 cd backend/mock-api
 python -m venv venv
 venv\Scripts\activate
-pip install fastapi uvicorn
+pip install -r requirements.txt
 uvicorn main:app --port 8002
 ```
 
-Server berjalan di: `http://127.0.0.1:8002`
-
-Swagger docs: `http://127.0.0.1:8002/docs`
+Server: `http://127.0.0.1:8002` | Docs: `http://127.0.0.1:8002/docs`
 
 ---
 
 ## Endpoints
 
-### `GET /flights`
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| GET | `/flights` | Cari penerbangan berdasarkan rute |
+| GET | `/hotels` | Cari hotel berdasarkan lokasi |
+| GET | `/activities` | Cari aktivitas wisata/kuliner/ibadah |
+| GET | `/transport` | Cari transportasi lokal |
 
-| Parameter | Tipe | Wajib | Contoh |
-|---|---|---|---|
-| `origin` | string | ✓ | `CGK` |
-| `destination` | string | ✓ | `DPS` |
-
-```
-GET /flights?origin=CGK&destination=DPS
-```
-
-### `GET /hotels`
-
-| Parameter | Tipe | Wajib | Contoh |
-|---|---|---|---|
-| `location` | string | ✓ | `Bali` |
-| `max_price` | integer | ✗ | `500000` |
-
-```
-GET /hotels?location=Bali
-GET /hotels?location=Bali&max_price=500000
-```
-
-### `GET /activities`
-
-| Parameter | Tipe | Wajib | Contoh |
-|---|---|---|---|
-| `location` | string | ✓ | `Bali` |
-| `category` | string | ✗ | `wisata` / `kuliner` / `ibadah` |
-
-```
-GET /activities?location=Bali
-GET /activities?location=Bali&category=wisata
-```
+Lihat `docs/api-contracts/data-schemas.md` untuk detail lengkap schema response.
 
 ---
 
 ## Data yang Tersedia
 
-| Lokasi | Penerbangan | Hotel | Aktivitas |
-|---|---|---|---|
-| Bali (DPS) | CGK→DPS, SUB→DPS | 6 hotel | 8 aktivitas |
-| Lombok (LOP) | CGK→LOP | 2 hotel | 2 aktivitas |
-| Yogyakarta | - | 2 hotel | 4 aktivitas |
+| Lokasi | Penerbangan | Hotel | Aktivitas | Transport |
+|---|---|---|---|---|
+| Bali (DPS) | CGK→DPS, SUB→DPS | 6 hotel | 8 aktivitas | 6 opsi |
+| Lombok (LOP) | CGK→LOP | 2 hotel | 2 aktivitas | 3 opsi |
+| Yogyakarta | - | 2 hotel | 4 aktivitas | 3 opsi |
 
 ---
 
 ## Untuk Frontend Developer (Nizar)
-
-Clone repo dan jalankan Mock API secara lokal:
 
 ```bash
 git clone https://github.com/SirTonyEdgar/multi-agentic-ai-travel-planner
 cd multi-agentic-ai-travel-planner/backend/mock-api
 python -m venv venv
 venv\Scripts\activate
-pip install fastapi uvicorn
-uvicorn main:app --port 8002
-```
-
-Setiap kali ada update data dari backend, jalankan:
-
-```bash
-git pull
-```
-
-Server tidak perlu di-restart jika menggunakan `--reload`. Jika tidak, restart manual setelah `git pull`.
-
-Untuk development dengan `--reload`:
-
-```bash
+pip install -r requirements.txt
 uvicorn main:app --reload --port 8002
 ```
+
+Setiap kali ada update data: `git pull` (tidak perlu install ulang).
 
 ---
 
 ## Error Response
 
-Jika data tidak ditemukan, endpoint mengembalikan HTTP 404:
+Jika data tidak ditemukan → HTTP 404:
 
 ```json
 {
-  "detail": "Tidak ada penerbangan tersedia untuk rute XXX -> YYY. Sistem tidak diperbolehkan menebak atau mengarang data."
+  "detail": "Tidak ada [data] tersedia di lokasi '[lokasi]'. Sistem tidak diperbolehkan menebak atau mengarang data."
 }
 ```

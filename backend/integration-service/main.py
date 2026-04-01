@@ -3,13 +3,11 @@ from fastapi import FastAPI, HTTPException, Query
 
 app = FastAPI(title="Integration Service", version="1.0.0")
 
-MOCK_API_URL = "http://127.0.0.1:8002"
-
+MOCK_API_URL = "http://mock-api:8002"
 
 @app.get("/")
 def health_check():
     return {"status": "Integration Service Ready"}
-
 
 @app.get("/flights")
 async def get_flights(
@@ -32,7 +30,6 @@ async def get_flights(
 
     return response.json()
 
-
 @app.get("/hotels")
 async def get_hotels(
     location: str = Query(...),
@@ -54,7 +51,6 @@ async def get_hotels(
         raise HTTPException(status_code=response.status_code, detail="Upstream error")
 
     return response.json()
-
 
 @app.get("/activities")
 async def get_activities(
