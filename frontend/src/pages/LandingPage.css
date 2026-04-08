@@ -1,0 +1,359 @@
+/* ══════════════════════════════════
+   Landing Page — Jalan
+   ══════════════════════════════════ */
+
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sand-50);
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 32px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.text-jalan { color: var(--warm-500); }
+.text-separator { color: var(--text-disabled); font-weight: 400; }
+.text-pesan { color: var(--sky-500); }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.nav-links a:hover {
+  color: var(--warm-500);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Hero ── */
+.hero-section {
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 72px 32px 56px;
+  background: 
+    radial-gradient(ellipse 70% 50% at 50% 0%, var(--warm-100) 0%, transparent 70%),
+    var(--sand-50);
+}
+
+.hero-content {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-light);
+  margin-top: -4px;
+}
+
+.hero-desc {
+  font-size: var(--text-body);
+  color: var(--text-muted);
+  max-width: 540px;
+  line-height: 1.65;
+}
+
+/* Search */
+.search-form {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 8px;
+}
+
+.search-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 16px;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s var(--ease-out);
+}
+
+.search-card:focus-within {
+  box-shadow: var(--shadow-hover), 0 0 0 3px rgba(255, 123, 84, 0.1);
+  border-color: rgba(255, 123, 84, 0.3);
+}
+
+.search-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-icon {
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: var(--text-sm);
+  font-family: inherit;
+  color: var(--text-main);
+  outline: none;
+  padding: 8px 0;
+}
+
+.search-input::placeholder {
+  color: var(--text-light);
+}
+
+/* Suggestions */
+.hero-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.suggestion-label {
+  font-size: var(--text-caption);
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.suggestion-chip {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--warm-600);
+  background: var(--warm-50);
+  border: 1px solid var(--warm-200);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  font-family: inherit;
+}
+
+.suggestion-chip:hover {
+  background: var(--warm-100);
+  border-color: var(--warm-400);
+  transform: translateY(-1px);
+}
+
+/* ── Sections ── */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-header h2 {
+  margin-bottom: 6px;
+}
+
+/* ── Destinations ── */
+.section-destinations {
+  padding: 56px 0;
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── Categories ── */
+.section-categories {
+  padding: 40px 0 64px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  text-align: center;
+  outline: none;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--warm-200);
+}
+
+.category-card:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 123, 84, 0.2);
+}
+
+.category-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  background: var(--warm-50);
+  color: var(--warm-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  transition: all 0.3s var(--ease-out);
+}
+
+.category-card:hover .category-icon-wrapper {
+  background: var(--warm-500);
+  color: white;
+  transform: scale(1.05);
+}
+
+.category-name {
+  font-size: var(--text-body);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.category-desc {
+  font-size: var(--text-caption);
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.landing-footer {
+  background: var(--white);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding: 28px 32px;
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-text {
+  font-size: var(--text-caption);
+  color: var(--text-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .navbar-inner {
+    padding: 12px 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 48px 20px 40px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-desc {
+    font-size: var(--text-sm);
+  }
+
+  .search-card {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .search-card .btn {
+    width: 100%;
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .section-container {
+    padding: 0 20px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .destinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

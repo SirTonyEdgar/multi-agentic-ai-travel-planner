@@ -1,0 +1,307 @@
+/* ══════════════════════════════════
+   Planner Page — Jalan AI Chat
+   ══════════════════════════════════ */
+
+.planner-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sand-50);
+  overflow: hidden;
+}
+
+/* ── Navbar ── */
+.planner-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: var(--white);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.planner-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--warm-500);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.planner-logo:hover {
+  opacity: 0.8;
+}
+
+.planner-nav-center {
+  flex: 1;
+  text-align: center;
+}
+
+.planner-query-label {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--text-light);
+  max-width: 400px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planner-nav-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Mobile tab bar ── */
+.mobile-tab-bar {
+  display: none;
+  background: var(--white);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: 0 16px;
+}
+
+.mobile-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s var(--ease-out);
+}
+
+.mobile-tab-active {
+  color: var(--warm-500);
+  border-bottom-color: var(--warm-500);
+}
+
+/* ── Main ── */
+.planner-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Chat Panel (Left) ── */
+.planner-chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(0,0,0,0.06);
+  background: var(--sand-50);
+  min-width: 0;
+}
+
+.planner-agent-section {
+  padding: 16px 20px 0;
+  flex-shrink: 0;
+}
+
+.planner-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chat-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 20px;
+  opacity: 0.7;
+}
+
+.chat-empty-state h3 {
+  font-size: var(--text-h3);
+  color: var(--text-main);
+}
+
+/* ── Chat Input ── */
+.planner-chat-input {
+  flex-shrink: 0;
+  padding: 12px 20px 16px;
+  background: var(--white);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sand-100);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius-lg);
+  padding: 4px 4px 4px 16px;
+  transition: all 0.2s var(--ease-out);
+}
+
+.chat-input-wrapper:focus-within {
+  border-color: var(--warm-300);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(255, 123, 84, 0.08);
+}
+
+.chat-input-wrapper input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: var(--text-sm);
+  color: var(--text-main);
+  outline: none;
+  padding: 10px 0;
+}
+
+.chat-input-wrapper input::placeholder {
+  color: var(--text-light);
+}
+
+.chat-input-wrapper input:disabled {
+  opacity: 0.5;
+}
+
+.chat-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--warm-500);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s var(--ease-out);
+  flex-shrink: 0;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background: var(--warm-600);
+  transform: scale(1.05);
+}
+
+.chat-send-btn:disabled {
+  background: var(--sand-300);
+  cursor: not-allowed;
+}
+
+/* ── Itinerary Panel (Right) ── */
+.planner-itinerary-panel {
+  width: 440px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.itinerary-panel-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+
+.itinerary-panel-title {
+  font-size: var(--text-h3);
+  margin-top: 10px;
+  color: var(--text-main);
+}
+
+.itinerary-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.itinerary-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 60px 20px;
+  opacity: 0.5;
+}
+
+.itinerary-panel-footer {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  background: var(--sand-50);
+  flex-shrink: 0;
+}
+
+.budget-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.budget-label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.budget-amount {
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--warm-600);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .mobile-tab-bar {
+    display: flex;
+  }
+
+  .planner-main {
+    flex-direction: column;
+  }
+
+  .planner-chat-panel,
+  .planner-itinerary-panel {
+    display: none;
+    width: 100%;
+    border-right: none;
+  }
+
+  .panel-active {
+    display: flex !important;
+    flex: 1;
+  }
+
+  .planner-nav-center {
+    display: none;
+  }
+
+  .planner-navbar {
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .planner-nav-actions .btn span {
+    display: none;
+  }
+}
