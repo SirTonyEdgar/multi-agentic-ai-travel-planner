@@ -1,4 +1,11 @@
 services:
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8003:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+
   mock-api:
     build: ./backend/mock-api
     ports:
@@ -18,6 +25,7 @@ services:
     depends_on:
       - mock-api
       - integration-service
+      - chromadb
     env_file:
       - .env
 
@@ -27,3 +35,6 @@ services:
       - "8080:8080"
     depends_on:
       - orchestrator-service
+
+volumes:
+  chroma_data:
