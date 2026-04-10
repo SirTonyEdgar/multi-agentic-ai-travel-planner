@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from tools import cari_hotel, cari_penerbangan, cari_aktivitas, cari_transport
+from memory import save_conversation, get_relevant_context
 
 load_dotenv()
 
@@ -55,6 +56,7 @@ Final Answer: jawaban lengkap dan terstruktur berisi: Penerbangan (maskapai, jam
 
 Begin!
 
+{context}
 Question: {input}
 Thought:{agent_scratchpad}
 """)
@@ -86,21 +88,29 @@ def read_root():
 @app.post("/plan-trip")
 async def plan_trip(request: TripRequest):
     try:
-        print(f"\n{'='*50}")
-        print(f"[ORCHESTRATOR] Query: {request.query}")
-        print(f"{'='*50}")
+        session = request.session_id or "default"
+
+        # Ambil konteks percakapan sebelumnya
+        context = get_relevant_context(session, request.query)
 
         result = await asyncio.get_event_loop().run_in_executor(
             None,
-            lambda: agent_executor.invoke({"input": request.query})
+            lambda: agent_executor.invoke({
+                "input": request.query,
+                "context": context
+            })
         )
 
         response = result.get("output", "")
+
+        # Simpan percakapan ke ChromaDB
+        save_conversation(session, request.query, response)
+
         print(f"[ORCHESTRATOR] Response: {response[:100]}...")
 
         return {
             "query": request.query,
-            "session_id": request.session_id,
+            "session_id": session,
             "response": response
         }
 
