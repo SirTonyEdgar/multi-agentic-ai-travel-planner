@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import AgentExecutor, create_react_agent
-from langchain import hub
+from langchain_core.prompts import PromptTemplate
 from tools import cari_hotel, cari_penerbangan, cari_aktivitas, cari_transport
 
 load_dotenv()
@@ -17,14 +17,13 @@ app = FastAPI(title="Orchestrator Service")
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.0-flash",
     temperature=0,
-    google_api_key=GOOGLE_API_KEY
+    google_api_key=GOOGLE_API_KEY,
+    convert_system_message_to_human=True
 )
 
 tools = [cari_penerbangan, cari_hotel, cari_aktivitas, cari_transport]
 
-prompt = hub.pull("hwchase17/react")
-
-prompt.template = """
+prompt = PromptTemplate.from_template("""
 Kamu adalah Agen Perjalanan Wisata profesional yang membantu pengguna merencanakan perjalanan.
 
 INSTRUKSI WAJIB:
@@ -42,6 +41,7 @@ INSTRUKSI WAJIB:
    - `cari_penerbangan`: Input format "ASAL,TUJUAN" (contoh: "CGK,DPS")
    - `cari_hotel`: Input nama kota (contoh: "Bali") atau "Kota,MaxHarga" (contoh: "Bali,500000")
    - `cari_aktivitas`: Input nama kota (contoh: "Bali") atau "Kota,kategori" (contoh: "Bali,wisata")
+   - `cari_transport`: Input nama kota (contoh: "Bali") atau "Kota,jenis" (contoh: "Bali,Rental Mobil")
 
 5. FORMAT BERPIKIR (ReAct):
 Question: pertanyaan dari user
@@ -57,7 +57,7 @@ Begin!
 
 Question: {input}
 Thought:{agent_scratchpad}
-"""
+""")
 
 agent = create_react_agent(llm, tools, prompt)
 
@@ -77,7 +77,10 @@ class TripRequest(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"status": "Orchestrator Service Ready", "tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas"]}
+    return {
+        "status": "Orchestrator Service Ready",
+        "tools": [t.name for t in tools]
+    }
 
 
 @app.post("/plan-trip")
@@ -87,7 +90,6 @@ async def plan_trip(request: TripRequest):
         print(f"[ORCHESTRATOR] Query: {request.query}")
         print(f"{'='*50}")
 
-        # Jalankan di thread pool agar tidak block event loop FastAPI
         result = await asyncio.get_event_loop().run_in_executor(
             None,
             lambda: agent_executor.invoke({"input": request.query})
