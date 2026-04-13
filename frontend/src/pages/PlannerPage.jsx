@@ -125,6 +125,7 @@ const PlannerPage = () => {
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const navigate = useNavigate();
+  const [sessionId] = useState(() => crypto.randomUUID());
   
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -143,8 +144,10 @@ const PlannerPage = () => {
   }, [messages, loading]);
 
   // Initial query from Landing Page
+  const hasSentInitialQuery = useRef(false);
   useEffect(() => {
-    if (initialQuery && messages.length === 0) {
+    if (initialQuery && messages.length === 0 && !hasSentInitialQuery.current) {
+      hasSentInitialQuery.current = true;
       sendMessage(initialQuery);
     }
   }, []);
@@ -186,7 +189,7 @@ const PlannerPage = () => {
 
     try {
       // Try real API first
-      const response = await fetch(`/api/chat?query=${encodeURIComponent(userMsg)}`);
+      const response = await fetch(`/api/chat?query=${encodeURIComponent(userMsg)}&session_id=${sessionId}`);
       
       if (response.ok) {
         const data = await response.json();
