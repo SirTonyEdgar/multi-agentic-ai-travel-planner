@@ -73,3 +73,25 @@ async def get_activities(
         raise HTTPException(status_code=response.status_code, detail="Upstream error")
 
     return response.json()
+
+@app.get("/transport")
+async def get_transport(
+    location: str = Query(...),
+    type: str = Query(None)
+):
+    params = {"location": location}
+    if type:
+        params["type"] = type
+
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        try:
+            response = await client.get(f"{MOCK_API_URL}/transport", params=params)
+        except httpx.RequestError as e:
+            raise HTTPException(status_code=503, detail=f"Mock API unavailable: {str(e)}")
+
+    if response.status_code == 404:
+        raise HTTPException(status_code=404, detail=response.json().get("detail"))
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Upstream error")
+
+    return response.json()

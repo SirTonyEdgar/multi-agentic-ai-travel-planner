@@ -1,7 +1,7 @@
 import httpx
 from langchain.tools import tool
 
-MOCK_API_URL = "http://mock-api:8002"
+INTEGRATION_URL = "http://integration-service:8000"
 
 @tool
 def cari_penerbangan(query_rute: str) -> str:
@@ -31,7 +31,7 @@ def cari_penerbangan(query_rute: str) -> str:
 
         with httpx.Client(timeout=10.0) as client:
             response = client.get(
-                f"{MOCK_API_URL}/flights",
+                f"{INTEGRATION_URL}/flights",
                 params={"origin": asal, "destination": tujuan}
             )
 
@@ -93,7 +93,7 @@ def cari_hotel(query: str) -> str:
             params["max_price"] = max_price
 
         with httpx.Client(timeout=10.0) as client:
-            response = client.get(f"{MOCK_API_URL}/hotels", params=params)
+            response = client.get(f"{INTEGRATION_URL}/hotels", params=params)
 
         if response.status_code == 200:
             data = response.json()
@@ -150,7 +150,7 @@ def cari_aktivitas(query: str) -> str:
             params["category"] = kategori
 
         with httpx.Client(timeout=10.0) as client:
-            response = client.get(f"{MOCK_API_URL}/activities", params=params)
+            response = client.get(f"{INTEGRATION_URL}/activities", params=params)
 
         if response.status_code == 200:
             data = response.json()
@@ -211,7 +211,7 @@ def cari_transport(query: str) -> str:
             params["type"] = jenis
 
         with httpx.Client(timeout=10.0) as client:
-            response = client.get(f"{MOCK_API_URL}/transport", params=params)
+            response = client.get(f"{INTEGRATION_URL}/transport", params=params)
 
         if response.status_code == 200:
             data = response.json()
