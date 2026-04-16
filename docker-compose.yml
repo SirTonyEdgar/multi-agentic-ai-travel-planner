@@ -36,5 +36,17 @@ services:
     depends_on:
       - orchestrator-service
 
+  frontend-jalan:
+    build: ./frontend-jalan
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-gateway
+
+  frontend-pesan:
+    build: ./frontend-pesan
+    ports:
+      - "5174:5174"
+
 volumes:
   chroma_data:

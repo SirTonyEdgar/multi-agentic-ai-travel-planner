@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ── Primary: Warm (Kelana) ── */
+  --warm-50: #FFF8F5;
+  --warm-100: #FFEAE3;
+  --warm-200: #FFD5C7;
+  --warm-300: #FFB59E;
+  --warm-400: #FF9675;
+  --warm-500: #FF7B54;
+  --warm-600: #E3643E;
+  --warm-700: #C44E2B;
+  --warm-800: #9E3A1C;
+  --warm-900: #7A2D14;
+  
+  /* ── Primary: Sky (Singgah) ── */
+  --sky-50: #F0F5FF;
+  --sky-100: #E7EFFF;
+  --sky-200: #C7DAFF;
+  --sky-300: #96BAFF;
+  --sky-400: #6F9EF5;
+  --sky-500: #4F8AF2;
+  --sky-600: #3A6AC4;
+  --sky-700: #2B509E;
+  --sky-800: #1E3A7A;
+  --sky-900: #142A5E;
+
+  /* ── Sage (Nature / Success) ── */
+  --sage-50: #F0F7F2;
+  --sage-100: #DCF0E2;
+  --sage-500: #34A853;
+  --sage-600: #2D8A46;
+  --sage-700: #236B37;
+
+  /* ── Sand (Neutral Background) ── */
+  --sand-50: #FEFCFA;
+  --sand-100: #FCFAF8;
+  --sand-200: #F5F0EB;
+  --sand-300: #E8E0D8;
+  --sand-400: #D5CBC0;
+
+  /* ── Coral (Alert / Danger) ── */
+  --coral-50: #FFF5F5;
+  --coral-100: #FFE5E5;
+  --coral-500: #EA4335;
+  --coral-600: #D1372A;
+
+  /* ── Semantic Aliases ── */
+  --primary-warm: var(--warm-500);
+  --primary-warm-hover: var(--warm-600);
+  --primary-warm-light: var(--warm-100);
+  
+  --primary-sky: var(--sky-500);
+  --primary-sky-hover: var(--sky-600);
+  --primary-sky-light: var(--sky-100);
+  
+  --sage-success: var(--sage-500);
+  --coral-alert: var(--coral-500);
+  --sand-bg: var(--sand-100);
+  --white: #FFFFFF;
+  
+  /* ── Text ── */
+  --text-main: #1C1B1F;
+  --text-secondary: #3D3A42;
+  --text-muted: #49454F;
+  --text-light: #79747E;
+  --text-disabled: #AEAAAE;
+
+  /* ── Typography ── */
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --text-h1: 40px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-body: 16px;
+  --text-sm: 14px;
+  --text-caption: 12px;
+  --text-xs: 11px;
+
+  /* ── Spacing ── */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Borders & Shadows ── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+  
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-card: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 28px rgba(0,0,0,0.1);
+  --shadow-elevated: 0 12px 40px rgba(0,0,0,0.12);
+  --shadow-warm: 0 6px 20px rgba(255, 123, 84, 0.2);
+  --shadow-sky: 0 6px 20px rgba(79, 138, 242, 0.2);
+
+  /* ── Transitions ── */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--sand-bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+h1 { font-size: var(--text-h1); font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+h2 { font-size: var(--text-h2); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
+h3 { font-size: var(--text-h3); font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+p { font-size: var(--text-body); line-height: 1.6; }
+small { font-size: var(--text-caption); color: var(--text-muted); }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s var(--ease-out);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sand-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sand-400);
+}
+
+/* ── Animations ── */
+.fade-in {
+  animation: fadeIn 0.5s var(--ease-out) forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s var(--ease-out) forwards;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.4s var(--ease-out) forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.4s var(--ease-out) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes typing {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Utility Text ── */
+.text-muted { color: var(--text-muted); }
+.text-light { color: var(--text-light); }
+.text-warm { color: var(--primary-warm); }
+.text-sky { color: var(--primary-sky); }
+.text-success { color: var(--sage-success); }
+.text-sm { font-size: var(--text-sm); }
+.text-caption { font-size: var(--text-caption); }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }

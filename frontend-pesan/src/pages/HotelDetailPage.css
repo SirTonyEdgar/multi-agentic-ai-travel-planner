@@ -1,0 +1,353 @@
+/* ══════════════════════════════════
+   Hotel Detail Page — Singgah
+   ══════════════════════════════════ */
+
+.hotel-detail-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #F6F8FC;
+}
+
+/* ── Singgah Navbar ── */
+.pesan-navbar {
+  background: var(--white);
+  border-bottom: 1px solid rgba(79, 138, 242, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.pesan-navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pesan-back-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.pesan-back-link:hover {
+  color: var(--sky-500);
+}
+
+.pesan-nav-tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.pesan-nav-tab {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-light);
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s var(--ease-out);
+}
+
+.pesan-nav-tab:first-child {
+  color: var(--sky-500);
+  border-bottom-color: var(--sky-500);
+}
+
+.pesan-nav-tab:hover {
+  color: var(--sky-500);
+}
+
+.text-singgah-brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--sky-500);
+}
+
+/* ── Breadcrumb ── */
+.hotel-breadcrumb {
+  background: var(--white);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.breadcrumb-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Main ── */
+.hotel-detail-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  width: 100%;
+  flex: 1;
+}
+
+/* ── Gallery ── */
+.hotel-gallery {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.gallery-main {
+  flex: 2;
+  min-height: 280px;
+}
+
+.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.gallery-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.gallery-thumb {
+  flex: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.gallery-thumb-placeholder {
+  background: linear-gradient(135deg, var(--sand-200), var(--sand-300));
+  min-height: 130px;
+}
+
+/* ── Hotel Info ── */
+.hotel-info-section {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-xs);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.hotel-info-header {
+  margin-bottom: 16px;
+}
+
+.hotel-info-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.hotel-info-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--warm-500);
+}
+
+.hotel-info-rating small {
+  font-weight: 400;
+  color: var(--text-light);
+}
+
+.hotel-info-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.hotel-info-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.hotel-facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.facility-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--sand-100);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* ── Rooms ── */
+.hotel-rooms-section {
+  margin-bottom: 32px;
+}
+
+.hotel-rooms-section h2 {
+  margin-bottom: 16px;
+}
+
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.room-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border: 2px solid rgba(0,0,0,0.05);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  outline: none;
+}
+
+.room-card:hover {
+  border-color: var(--sky-200);
+  box-shadow: var(--shadow-card);
+}
+
+.room-card-selected {
+  border-color: var(--sky-500);
+  background: var(--sky-50);
+  box-shadow: var(--shadow-sky);
+}
+
+.room-card-type {
+  font-size: var(--text-body);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.room-card-details {
+  font-size: var(--text-caption);
+  color: var(--text-light);
+}
+
+.room-card-price-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.room-card-price-label {
+  font-size: var(--text-xs);
+  color: var(--text-light);
+}
+
+.room-card-price {
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--sky-600);
+}
+
+/* ── Proceed bar ── */
+.room-proceed-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border: 1px solid var(--sky-200);
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.room-proceed-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.text-sky {
+  color: var(--sky-600);
+}
+
+/* ── Footer ── */
+.pesan-footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--white);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  margin-top: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pesan-navbar-inner,
+  .breadcrumb-inner,
+  .hotel-detail-main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .pesan-nav-tabs {
+    display: none;
+  }
+
+  .hotel-gallery {
+    flex-direction: column;
+  }
+
+  .gallery-side {
+    flex-direction: row;
+  }
+
+  .hotel-info-name {
+    font-size: 22px;
+  }
+
+  .room-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .room-card-price-section {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .room-proceed-bar {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .room-proceed-bar .btn {
+    width: 100%;
+  }
+}
