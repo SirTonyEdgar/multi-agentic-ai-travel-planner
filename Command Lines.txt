@@ -1,0 +1,161 @@
+============================================================
+  MULTI-AGENT AI TRAVEL PLANNER — COMMAND CHEAT SHEET
+============================================================
+
+============================================================
+  CARA 1 — DOCKER (direkomendasikan)
+============================================================
+
+Jalankan semua service sekaligus dari root folder:
+
+  docker-compose up --build
+
+Stop semua service:
+
+  docker-compose down
+
+Rebuild satu service saja (misal setelah update kode):
+
+  docker-compose build orchestrator-service --no-cache
+  docker-compose up -d
+
+Swagger docs via Docker:
+  http://localhost:8002/docs   (Mock API)
+  http://localhost:8000/docs   (Integration Service)
+  http://localhost:8001/docs   (Orchestrator Service)
+  http://localhost:8080/docs   (API Gateway)
+
+Catatan:
+- File .env wajib ada di root folder (sejajar docker-compose.yml)
+  isi: GOOGLE_API_KEY=isi_api_key_kamu
+- Docker Desktop harus jalan sebelum docker-compose up
+
+============================================================
+  CARA 2 — MANUAL (untuk development)
+============================================================
+
+Install dependencies (sekali saja per service, dari folder masing-masing):
+
+  cd backend/mock-api && pip install -r requirements.txt
+  cd backend/integration-service && pip install -r requirements.txt
+  cd backend/orchestrator-service && pip install -r requirements.txt
+  cd backend/api-gateway && pip install -r requirements.txt
+
+Jalankan satu per satu di terminal berbeda (urutan wajib):
+
+------------------------------------------------------------
+STEP 1 — MOCK API (port 8002)
+------------------------------------------------------------
+cd backend/mock-api
+venv\Scripts\activate
+uvicorn main:app --port 8002
+
+------------------------------------------------------------
+STEP 2 — INTEGRATION SERVICE (port 8000)
+------------------------------------------------------------
+cd backend/integration-service
+venv\Scripts\activate
+uvicorn main:app --port 8000
+
+------------------------------------------------------------
+STEP 3 — ORCHESTRATOR SERVICE (port 8001)
+------------------------------------------------------------
+cd backend/orchestrator-service
+venv\Scripts\activate
+uvicorn main:app --port 8001
+
+------------------------------------------------------------
+STEP 4 — API GATEWAY (port 8080)
+------------------------------------------------------------
+cd backend/api-gateway
+venv\Scripts\activate
+uvicorn main:app --port 8080
+
+Catatan:
+- File .env wajib ada di backend/orchestrator-service/
+  isi: GOOGLE_API_KEY=isi_api_key_kamu
+- Swagger docs: http://127.0.0.1:PORT/docs
+
+============================================================
+  TEST — MOCK API LANGSUNG (browser)
+============================================================
+
+http://127.0.0.1:8002/flights?origin=CGK&destination=DPS
+http://127.0.0.1:8002/flights?origin=SUB&destination=DPS
+http://127.0.0.1:8002/hotels?location=Bali
+http://127.0.0.1:8002/hotels?location=Bali&max_price=500000
+http://127.0.0.1:8002/activities?location=Bali
+http://127.0.0.1:8002/activities?location=Bali&category=wisata
+http://127.0.0.1:8002/activities?location=Bali&category=kuliner
+http://127.0.0.1:8002/activities?location=Bali&category=ibadah
+http://127.0.0.1:8002/transport?location=Bali
+http://127.0.0.1:8002/transport?location=Bali&type=Shuttle Bandara
+http://127.0.0.1:8002/transport?location=Yogyakarta&type=Rental Mobil
+
+============================================================
+  TEST — INTEGRATION SERVICE LANGSUNG (browser)
+============================================================
+
+http://127.0.0.1:8000/flights?origin=CGK&destination=DPS
+http://127.0.0.1:8000/hotels?location=Bali
+http://127.0.0.1:8000/activities?location=Bali&category=wisata
+http://127.0.0.1:8000/transport?location=Bali
+
+============================================================
+  TEST — SINGLE AGENT (PowerShell)
+============================================================
+
+Invoke-WebRequest -Uri "http://localhost:8001/plan-trip" -Method POST -ContentType "application/json" -Body '{"query": "Saya mau liburan ke Bali dari Jakarta", "session_id": "test"}' -UseBasicParsing
+
+Tampilkan response lengkap:
+  $r = Invoke-WebRequest -Uri "http://localhost:8001/plan-trip" -Method POST -ContentType "application/json" -Body '{"query": "QUERY_KAMU", "session_id": "test"}' -UseBasicParsing
+  $r.Content | ConvertFrom-Json | ConvertTo-Json -Depth 5
+
+============================================================
+  TEST — MULTI-AGENT (PowerShell)
+============================================================
+
+Invoke-WebRequest -Uri "http://localhost:8001/plan-trip-multi" -Method POST -ContentType "application/json" -Body '{"query": "Saya mau liburan ke Bali dari Jakarta", "session_id": "test_multi"}' -UseBasicParsing
+
+Tampilkan response lengkap:
+  $r = Invoke-WebRequest -Uri "http://localhost:8001/plan-trip-multi" -Method POST -ContentType "application/json" -Body '{"query": "QUERY_KAMU", "session_id": "test_multi"}' -UseBasicParsing
+  $r.Content | ConvertFrom-Json | ConvertTo-Json -Depth 5
+
+============================================================
+  TEST — FULL FLOW VIA API GATEWAY (browser)
+============================================================
+
+http://127.0.0.1:8080/api/chat?query=Carikan tiket CGK ke Bali dan hotel di Kuta budget 500 ribu
+http://127.0.0.1:8080/api/chat?query=Saya mau liburan ke Bali dari Jakarta, carikan tiket termurah, hotel budget 600 ribu, dan rekomendasi wisata
+http://127.0.0.1:8080/api/chat?query=Rekomendasikan tempat makan enak di Bali
+http://127.0.0.1:8080/api/chat?query=Ada masjid apa saja di Bali?
+http://127.0.0.1:8080/api/chat?query=Saya mau ke Bali, ada transport apa dari bandara?
+
+============================================================
+  CEK LOG DOCKER
+============================================================
+
+  docker logs multi-agentic-ai-travel-planner-orchestrator-service-1 -f
+  docker logs multi-agentic-ai-travel-planner-mock-api-1 -f
+  docker logs multi-agentic-ai-travel-planner-integration-service-1 -f
+
+============================================================
+  CEK API USAGE GEMINI
+============================================================
+
+  https://aistudio.google.com/app/usage
+  Project: Default Gemini Project
+  Model: Gemini 2.5 Flash
+
+============================================================
+  PORT SUMMARY
+============================================================
+
+  8002 = Mock API (ground truth data)
+  8000 = Integration Service
+  8001 = Orchestrator Service (Single Agent: /plan-trip, Multi-Agent: /plan-trip-multi)
+  8080 = API Gateway (frontend connect ke sini)
+  8003 = ChromaDB (memori percakapan)
+  5173 = Frontend (Nizar)
+
+============================================================

@@ -55,15 +55,15 @@
     {
       "id": "SC004",
       "category": "bundle_lengkap",
-      "query": "Saya mau ke Yogyakarta. Carikan tiket bus dari Bandara YIA ke Malioboro, hotel budget 800 ribu, wisata Borobudur, dan tempat salat.",
-      "required_tools": ["cari_transport", "cari_hotel", "cari_aktivitas"],
+      "query": "Saya mau ke Yogyakarta. Carikan tiket bus dari Bandara YIA ke Malioboro, hotel budget 800 ribu, wisata Borobudur, dan tempat sholat.",
+      "required_tools": ["cari_transport", "cari_hotel", "cari_aktivitas", "cari_aktivitas"],
       "expected_data": {
         "transport": {"location": "Yogyakarta", "type": "Shuttle Bandara"},
         "hotel": {"location": "Yogyakarta", "max_price": 800000},
         "aktivitas_wisata": {"location": "Yogyakarta", "category": "wisata"},
         "aktivitas_ibadah": {"location": "Yogyakarta", "category": "ibadah"}
       },
-      "expected_behavior": "Menampilkan data faktual dari Mock API, termasuk 2 kategori aktivitas"
+      "expected_behavior": "Menampilkan data faktual dari Mock API, cari_aktivitas dipanggil DUA KALI untuk kategori wisata dan ibadah"
     },
     {
       "id": "SC005",
@@ -106,7 +106,7 @@
     {
       "id": "SC008",
       "category": "bundle_lengkap",
-      "query": "Rencanakan honeymoon ke Bali: tiket romantis, villa mewah, restoran tepi pantai, dan transport eksklusif.",
+      "query": "Rencanakan honeymoon ke Bali dari Jakarta: tiket romantis, villa mewah, restoran tepi pantai, dan transport eksklusif.",
       "required_tools": ["cari_penerbangan", "cari_hotel", "cari_aktivitas", "cari_transport"],
       "expected_data": {
         "penerbangan": {"origin": "CGK", "destination": "DPS"},
@@ -133,14 +133,14 @@
       "id": "SC010",
       "category": "bundle_lengkap",
       "query": "Wisata sejarah dan budaya ke Yogyakarta. Butuh hotel dekat Malioboro, Candi Borobudur, kuliner lokal, dan angkutan dari bandara.",
-      "required_tools": ["cari_hotel", "cari_aktivitas", "cari_transport"],
+      "required_tools": ["cari_hotel", "cari_aktivitas", "cari_aktivitas", "cari_transport"],
       "expected_data": {
         "hotel": {"location": "Yogyakarta"},
         "aktivitas_wisata": {"location": "Yogyakarta", "category": "wisata"},
         "aktivitas_kuliner": {"location": "Yogyakarta", "category": "kuliner"},
         "transport": {"location": "Yogyakarta"}
       },
-      "expected_behavior": "Menampilkan data faktual dari Mock API"
+      "expected_behavior": "Menampilkan data faktual dari Mock API, cari_aktivitas dipanggil DUA KALI"
     },
     {
       "id": "SC011",
@@ -229,7 +229,7 @@
       "id": "SC019",
       "category": "bundle_parsial",
       "query": "Tempat ibadah dan kuliner halal di Bali.",
-      "required_tools": ["cari_aktivitas"],
+      "required_tools": ["cari_aktivitas", "cari_aktivitas"],
       "expected_data": {
         "aktivitas_ibadah": {"location": "Bali", "category": "ibadah"},
         "aktivitas_kuliner": {"location": "Bali", "category": "kuliner"}
@@ -343,7 +343,7 @@
       "query": "Saya mau ke Bali tapi tidak tahu dari mana dan kapan, tolong bantu.",
       "required_tools": [],
       "expected_data": {},
-      "expected_behavior": "Sistem meminta klarifikasi kepada user mengenai kota asal dan tanggal keberangkatan sebelum memanggil alat apapun"
+      "expected_behavior": "Sistem mengasumsikan kota asal Jakarta (CGK) dan langsung mencari data penerbangan, hotel, dan aktivitas di Bali"
     }
   ]
 }
