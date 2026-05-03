@@ -3,21 +3,53 @@
 ============================================================
 
 ============================================================
+  CARA MEMULAI SISTEM
+============================================================
+
+PRASYARAT:
+1. Pastikan Docker Desktop sudah terinstall dan sedang berjalan
+2. Pastikan file .env ada di root folder (sejajar docker-compose.yml)
+   Isi file .env:
+     GOOGLE_API_KEY=isi_api_key_kamu_di_sini
+     CHROMA_SERVER_HOST=chromadb
+     CHROMA_SERVER_HTTP_PORT=8000
+
+LANGKAH MEMULAI:
+1. Buka terminal (PowerShell atau Command Prompt atau terimanl VS Code)
+2. Masuk ke folder project
+3. Jalankan semua service:
+     docker-compose up -d
+4. Tunggu sekitar 30-60 detik sampai semua container siap
+5. Buka aplikasi di browser:
+
+   APLIKASI UTAMA (Kelana — Travel Planner):
+     http://localhost:5173
+
+   APLIKASI PEMESANAN (Singgah — Booking):
+     http://localhost:5174
+
+CARA STOP SISTEM:
+  docker-compose down
+
+============================================================
   CARA 1 — DOCKER (direkomendasikan)
 ============================================================
 
 Jalankan semua service sekaligus dari root folder:
+  docker-compose up -d
 
-  docker-compose up --build
+Jalankan dengan rebuild (setelah update kode):
+  docker-compose up --build -d
 
 Stop semua service:
-
   docker-compose down
 
-Rebuild satu service saja (misal setelah update kode):
-
+Rebuild satu service saja:
   docker-compose build orchestrator-service --no-cache
   docker-compose up -d
+
+Cek status semua container:
+  docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 Swagger docs via Docker:
   http://localhost:8002/docs   (Mock API)
@@ -35,7 +67,6 @@ Catatan:
 ============================================================
 
 Install dependencies (sekali saja per service, dari folder masing-masing):
-
   cd backend/mock-api && pip install -r requirements.txt
   cd backend/integration-service && pip install -r requirements.txt
   cd backend/orchestrator-service && pip install -r requirements.txt
@@ -71,10 +102,31 @@ cd backend/api-gateway
 venv\Scripts\activate
 uvicorn main:app --port 8080
 
+------------------------------------------------------------
+STEP 5 — FRONTEND KELANA (port 5173)
+------------------------------------------------------------
+cd frontend-jalan
+npm install   (hanya pertama kali)
+npm run dev
+
+------------------------------------------------------------
+STEP 6 — FRONTEND SINGGAH (port 5174)
+------------------------------------------------------------
+cd frontend-pesan
+npm install   (hanya pertama kali)
+npm run dev
+
 Catatan:
 - File .env wajib ada di backend/orchestrator-service/
   isi: GOOGLE_API_KEY=isi_api_key_kamu
 - Swagger docs: http://127.0.0.1:PORT/docs
+
+============================================================
+  LINK APLIKASI
+============================================================
+
+  http://localhost:5173   → Kelana (Travel Planner — input query wisata)
+  http://localhost:5174   → Singgah (Booking — simulasi pemesanan)
 
 ============================================================
   TEST — MOCK API LANGSUNG (browser)
@@ -138,6 +190,8 @@ http://127.0.0.1:8080/api/chat?query=Saya mau ke Bali, ada transport apa dari ba
   docker logs multi-agentic-ai-travel-planner-orchestrator-service-1 -f
   docker logs multi-agentic-ai-travel-planner-mock-api-1 -f
   docker logs multi-agentic-ai-travel-planner-integration-service-1 -f
+  docker logs multi-agentic-ai-travel-planner-api-gateway-1 -f
+  docker logs multi-agentic-ai-travel-planner-chromadb-1 -f
 
 ============================================================
   CEK API USAGE GEMINI
@@ -151,11 +205,12 @@ http://127.0.0.1:8080/api/chat?query=Saya mau ke Bali, ada transport apa dari ba
   PORT SUMMARY
 ============================================================
 
-  8002 = Mock API (ground truth data)
+  5173 = Frontend Kelana (Travel Planner — buka di browser)
+  5174 = Frontend Singgah (Booking — buka di browser)
+  8080 = API Gateway (penghubung frontend ke backend)
+  8001 = Orchestrator Service (AI Agent)
   8000 = Integration Service
-  8001 = Orchestrator Service (Single Agent: /plan-trip, Multi-Agent: /plan-trip-multi)
-  8080 = API Gateway (frontend connect ke sini)
+  8002 = Mock API (ground truth data)
   8003 = ChromaDB (memori percakapan)
-  5173 = Frontend (Nizar)
 
 ============================================================
