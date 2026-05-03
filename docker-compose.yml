@@ -37,7 +37,10 @@ services:
       - orchestrator-service
 
   frontend-jalan:
-    build: ./frontend-jalan
+    build:
+      context: ./frontend-jalan
+      args:
+        - VITE_API_URL=http://localhost:8080
     ports:
       - "5173:5173"
     depends_on:

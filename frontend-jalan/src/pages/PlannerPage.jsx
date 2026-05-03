@@ -191,7 +191,8 @@ const PlannerPage = () => {
 
     try {
       // Try real API first
-      const response = await fetch(`/api/chat?query=${encodeURIComponent(userMsg)}&session_id=${sessionId}`);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+      const response = await fetch(`${API_URL}/api/chat?query=${encodeURIComponent(userMsg)}&session_id=${sessionId}`);
 
       if (response.ok) {
         const data = await response.json();
