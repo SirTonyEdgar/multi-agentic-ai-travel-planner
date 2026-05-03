@@ -13,6 +13,9 @@ PRASYARAT:
      GOOGLE_API_KEY=isi_api_key_kamu_di_sini
      CHROMA_SERVER_HOST=chromadb
      CHROMA_SERVER_HTTP_PORT=8000
+3. Pastikan file .env ada di folder frontend-jalan
+    Isi file .env:
+     VITE_API_URL=http://localhost:8080
 
 LANGKAH MEMULAI:
 1. Buka terminal (PowerShell atau Command Prompt atau terimanl VS Code)
