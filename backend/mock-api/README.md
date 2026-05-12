@@ -35,8 +35,8 @@ Lihat `docs/api-contracts/data-schemas.md` untuk detail lengkap schema response.
 
 | Lokasi | Penerbangan | Hotel | Aktivitas | Transport |
 |---|---|---|---|---|
-| Bali (DPS) | CGK→DPS, SUB→DPS | 6 hotel | 8 aktivitas | 6 opsi |
-| Lombok (LOP) | CGK→LOP | 2 hotel | 2 aktivitas | 3 opsi |
+| Bali (DPS) | CGK→DPS (5 penerbangan), SUB→DPS (2 penerbangan) | 6 hotel | 8 aktivitas | 6 opsi |
+| Lombok (LOP) | CGK→LOP (2 penerbangan) | 2 hotel | 2 aktivitas | 3 opsi |
 | Yogyakarta | - | 2 hotel | 4 aktivitas | 3 opsi |
 
 ---
