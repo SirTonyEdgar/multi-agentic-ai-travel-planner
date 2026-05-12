@@ -10,15 +10,27 @@ PRASYARAT:
 1. Pastikan Docker Desktop sudah terinstall dan sedang berjalan
 2. Pastikan file .env ada di root folder (sejajar docker-compose.yml)
    Isi file .env:
+
+     # Wajib:
      GOOGLE_API_KEY=isi_api_key_kamu_di_sini
      CHROMA_SERVER_HOST=chromadb
      CHROMA_SERVER_HTTP_PORT=8000
+
+     # Konfigurasi LLM (opsional, default: Gemini 2.5 Flash):
+     LLM_PROVIDER=gemini          # pilihan: gemini | openai | anthropic | deepseek
+     LLM_MODEL=gemini-2.5-flash   # sesuaikan dengan provider
+
+     # API Key provider lain (isi hanya jika ganti provider):
+     # OPENAI_API_KEY=
+     # ANTHROPIC_API_KEY=
+     # DEEPSEEK_API_KEY=
+
 3. Pastikan file .env ada di folder frontend-jalan
     Isi file .env:
      VITE_API_URL=http://localhost:8080
 
 LANGKAH MEMULAI:
-1. Buka terminal (PowerShell atau Command Prompt atau terimanl VS Code)
+1. Buka terminal (PowerShell atau Command Prompt atau terminal VS Code)
 2. Masuk ke folder project
 3. Jalankan semua service:
      docker-compose up -d
@@ -62,7 +74,6 @@ Swagger docs via Docker:
 
 Catatan:
 - File .env wajib ada di root folder (sejajar docker-compose.yml)
-  isi: GOOGLE_API_KEY=isi_api_key_kamu
 - Docker Desktop harus jalan sebelum docker-compose up
 
 ============================================================
@@ -120,8 +131,9 @@ npm install   (hanya pertama kali)
 npm run dev
 
 Catatan:
-- File .env wajib ada di backend/orchestrator-service/
+- File .env wajib ada di root folder (sejajar docker-compose.yml)
   isi: GOOGLE_API_KEY=isi_api_key_kamu
+- load_dotenv() akan membaca root .env secara otomatis
 - Swagger docs: http://127.0.0.1:PORT/docs
 
 ============================================================
@@ -197,12 +209,43 @@ http://127.0.0.1:8080/api/chat?query=Saya mau ke Bali, ada transport apa dari ba
   docker logs multi-agentic-ai-travel-planner-chromadb-1 -f
 
 ============================================================
-  CEK API USAGE GEMINI
+  CEK API USAGE
 ============================================================
 
-  https://aistudio.google.com/app/usage
-  Project: Default Gemini Project
-  Model: Gemini 2.5 Flash
+  Gemini:    https://aistudio.google.com/app/usage
+  OpenAI:    https://platform.openai.com/usage
+  Anthropic: https://console.anthropic.com/settings/usage
+  DeepSeek:  https://platform.deepseek.com/usage
+
+============================================================
+  GANTI LLM PROVIDER
+============================================================
+
+Edit root .env, ubah LLM_PROVIDER dan LLM_MODEL:
+
+  Gemini (default):
+    LLM_PROVIDER=gemini
+    LLM_MODEL=gemini-2.5-flash (atau sesuai model yang diinginkan)
+    GOOGLE_API_KEY=isi_key
+
+  OpenAI:
+    LLM_PROVIDER=openai
+    LLM_MODEL=gpt-4o (atau sesuai model yang diinginkan)
+    OPENAI_API_KEY=isi_key
+
+  Anthropic (Claude):
+    LLM_PROVIDER=anthropic
+    LLM_MODEL=claude-3-5-sonnet-20241022 (atau sesuai model yang diinginkan)
+    ANTHROPIC_API_KEY=isi_key
+
+  DeepSeek:
+    LLM_PROVIDER=deepseek
+    LLM_MODEL=deepseek-chat (atau sesuai model yang diinginkan)
+    DEEPSEEK_API_KEY=isi_key
+
+Setelah ubah .env, rebuild orchestrator:
+  docker-compose build orchestrator-service --no-cache
+  docker-compose up -d
 
 ============================================================
   PORT SUMMARY

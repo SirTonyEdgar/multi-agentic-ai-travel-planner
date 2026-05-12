@@ -5,6 +5,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -23,11 +25,20 @@ app = FastAPI(title="Orchestrator Service")
 # ============================================================
 # LLM
 # ============================================================
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    temperature=0,
-    google_api_key=GOOGLE_API_KEY,
-)
+def get_llm():
+    provider = os.getenv("LLM_PROVIDER", "gemini").lower()
+    model = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+
+    if provider == "openai":
+        return ChatOpenAI(model=model or "gpt-4o", temperature=0, api_key=os.getenv("OPENAI_API_KEY"))
+    elif provider == "anthropic":
+        return ChatAnthropic(model=model or "claude-3-5-sonnet-20241022", temperature=0, api_key=os.getenv("ANTHROPIC_API_KEY"))
+    elif provider == "deepseek":
+        return ChatOpenAI(model=model or "deepseek-chat", temperature=0, api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com/v1")
+    else:  # default: gemini
+        return ChatGoogleGenerativeAI(model=model, temperature=0, google_api_key=os.getenv("GOOGLE_API_KEY"))
+
+llm = get_llm()
 
 # ============================================================
 # SINGLE AGENT SETUP

@@ -40,3 +40,10 @@ GET /api/chat?query=Carikan tiket CGK ke Bali dan hotel budget 500 ribu
 | Status | Kondisi |
 |---|---|
 | 503 | Orchestrator Service tidak dapat dihubungi |
+| 500 | Orchestrator error (LLM atau tools gagal) |
+
+## Catatan
+
+- Endpoint `/api/chat` menggunakan Single Agent mode secara default.
+- Untuk mengakses Multi-Agent mode, gunakan langsung ke Orchestrator Service:
+    POST http://localhost:8001/plan-trip-multi

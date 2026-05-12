@@ -12,10 +12,7 @@ pip install -r requirements.txt
 uvicorn main:app --port 8001
 ```
 
-Buat file `.env` di folder ini:
-```
-GOOGLE_API_KEY=isi_api_key_kamu
-```
+File `.env` ada di root folder (sejajar docker-compose.yml)
 
 ## Endpoint
 
@@ -51,7 +48,8 @@ Menerima query dari API Gateway dan mengorkestrasi agen untuk menghasilkan renca
 
 ## Arsitektur
 
-- **LLM:** Gemini 2.0 Flash
-- **Framework:** LangChain dengan pola ReAct
+- **LLM:** Model-agnostic via LangChain (default: Gemini 2.5 Flash)
+- **Provider yang didukung:** Gemini, OpenAI, Anthropic, DeepSeek
+- **Framework:** LangChain dengan pola Tool Calling (Single Agent) dan LangGraph (Multi-Agent)
 - **Anti-halusinasi:** Semua data wajib bersumber dari Mock API (port 8002)
-- **Max iterations:** 8 siklus penalaran per request
+- **Max iterations:** 10 siklus penalaran per request
