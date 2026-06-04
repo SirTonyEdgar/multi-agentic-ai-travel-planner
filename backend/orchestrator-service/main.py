@@ -66,6 +66,8 @@ ATURAN PENGGUNAAN TOOLS:
   Kota yang tersedia: Bali, Lombok, Yogyakarta
   Area spesifik (Ubud, Kuta, Senggigi, dll) → tetap gunakan nama kota utama.
   Jika lokasi tidak ada dalam daftar → JANGAN panggil tool, sampaikan data tidak tersedia.
+  Jika user menyebut nama hotel spesifik → gunakan format "KOTA,nama=NAMA_HOTEL"
+  Jika lokasi tidak disebutkan tapi nama hotel dikenal → tebak kotanya dan tetap panggil tool.
 
 - cari_aktivitas: "KOTA" atau "KOTA,KATEGORI"
   Kota yang tersedia: Bali, Lombok, Yogyakarta
@@ -76,6 +78,8 @@ ATURAN PENGGUNAAN TOOLS:
   - "wisata", "pantai", "candi", "taman", "snorkeling", "diving" → wisata
   Jika 2 kategori berbeda diminta → panggil tool DUA KALI dengan kategori berbeda.
   Jika lokasi tidak ada dalam daftar → JANGAN panggil tool, sampaikan data tidak tersedia.
+  Jika user menyebut nama tempat spesifik → gunakan format "KOTA,nama=NAMA_TEMPAT"
+  Jika lokasi tidak disebutkan tapi nama tempat dikenal → tebak kotanya dan tetap panggil tool.
 
 - cari_transport: "KOTA" atau "KOTA,JENIS"
   Kota yang tersedia: Bali, Lombok, Yogyakarta
@@ -87,6 +91,8 @@ ATURAN PENGGUNAAN TOOLS:
   - "taksi", "grab", "ojek" → Taksi
   Jika jenis tidak disebutkan → gunakan kota saja tanpa jenis.
   Jika lokasi tidak ada dalam daftar → JANGAN panggil tool, sampaikan data tidak tersedia.
+  Jika user menyebut nama provider spesifik → gunakan format "KOTA,nama=NAMA_PROVIDER"
+  Jika lokasi tidak disebutkan tapi nama provider dikenal → tebak kotanya dan tetap panggil tool.
 
 {context}"""),
     ("human", "{input}"),
@@ -110,6 +116,9 @@ single_agent_executor = AgentExecutor(
 SUB_AGENT_SYSTEM = """Kamu adalah agen pencarian data perjalanan wisata Indonesia.
 Gunakan tool yang tersedia untuk mencari data. DILARANG mengarang informasi.
 Jika data tidak ditemukan, sampaikan DATA TIDAK DITEMUKAN dengan jelas.
+Jika user menyebut nama spesifik hotel, tempat wisata, atau provider transport,
+gunakan format "KOTA,nama=NAMA" saat memanggil tool.
+Jika lokasi tidak disebutkan tapi nama dikenal, tebak kotanya dan tetap panggil tool.
 Jawab dalam Bahasa Indonesia."""
 
 flight_agent = create_react_agent(llm, [cari_penerbangan])
