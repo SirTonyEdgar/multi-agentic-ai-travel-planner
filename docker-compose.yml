@@ -10,6 +10,8 @@ services:
     build: ./backend/mock-api
     ports:
       - "8002:8002"
+    volumes:
+      - ./backend/mock-api/data:/app/data
 
   integration-service:
     build: ./backend/integration-service
