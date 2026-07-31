@@ -1,18 +1,34 @@
+import os
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
+def resolve_url(env_value: str) -> str:
+    """Terima bare hostname (mis. dari Render 'fromService: property: host')
+    atau full URL (mis. 'http://orchestrator-service:8001' di docker-compose lokal)."""
+    if env_value.startswith("http://") or env_value.startswith("https://"):
+        return env_value
+    return f"https://{env_value}"
+
 app = FastAPI(title="API Gateway", version="1.0.0")
+
+# Daftar origin frontend yang boleh akses API ini, dipisah koma.
+# Default mencakup dev server lokal (docker-compose / npm run dev).
+_default_origins = "http://localhost:5173,http://localhost:5174"
+ALLOWED_ORIGINS = [resolve_url(o.strip()) for o in os.getenv("ALLOWED_ORIGINS", _default_origins).split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174"],
-    allow_credentials=True,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,  # tidak ada cookie/auth di alur ini, aman dipakai bareng origin "*"
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-ORCHESTRATOR_URL = "http://orchestrator-service:8001"
+# Di docker-compose, "orchestrator-service" adalah nama service di jaringan internal.
+# Di Render (atau host lain), override lewat env var ORCHESTRATOR_URL — boleh diisi
+# bare hostname (auto dari Render) atau full URL.
+ORCHESTRATOR_URL = resolve_url(os.getenv("ORCHESTRATOR_URL", "http://orchestrator-service:8001"))
 
 @app.get("/")
 def health_check():

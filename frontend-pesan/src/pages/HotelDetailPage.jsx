@@ -5,7 +5,7 @@ import Badge from '../components/ui/Badge';
 import { Star, MapPin, Wifi, Car, Coffee, Waves, ArrowLeft, Check, ChevronRight } from 'lucide-react';
 import './HotelDetailPage.css';
 
-const JALAN_URL = 'http://localhost:5173';
+const JALAN_URL = import.meta.env.VITE_JALAN_URL || 'http://localhost:5173';
 
 // Mock hotel data from hotels.json
 const HOTELS_DATA = {

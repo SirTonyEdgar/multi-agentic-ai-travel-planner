@@ -1,9 +1,16 @@
+import os
 import httpx
 from fastapi import FastAPI, HTTPException, Query
 
 app = FastAPI(title="Integration Service", version="1.0.0")
 
-MOCK_API_URL = "http://mock-api:8002"
+def resolve_url(env_value: str) -> str:
+    """Terima bare hostname (dari Render) atau full URL (docker-compose lokal)."""
+    if env_value.startswith("http://") or env_value.startswith("https://"):
+        return env_value
+    return f"https://{env_value}"
+
+MOCK_API_URL = resolve_url(os.getenv("MOCK_API_URL", "http://mock-api:8002"))
 
 @app.get("/")
 def health_check():

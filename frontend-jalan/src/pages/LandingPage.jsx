@@ -6,7 +6,7 @@ import DestinationCard from '../components/ui/DestinationCard';
 import { Sparkles, MapPin, Search, Compass, UtensilsCrossed, Landmark } from 'lucide-react';
 import './LandingPage.css';
 
-const PESAN_URL = 'http://localhost:5174';
+const PESAN_URL = import.meta.env.VITE_PESAN_URL || 'http://localhost:5174';
 
 const DESTINATIONS = [
   {

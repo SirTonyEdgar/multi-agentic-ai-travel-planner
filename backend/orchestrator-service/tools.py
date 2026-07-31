@@ -1,8 +1,15 @@
+import os
 import httpx
 import difflib
 from langchain.tools import tool
 
-INTEGRATION_URL = "http://integration-service:8000"
+def _resolve_url(env_value: str) -> str:
+    """Terima bare hostname (dari Render) atau full URL (docker-compose lokal)."""
+    if env_value.startswith("http://") or env_value.startswith("https://"):
+        return env_value
+    return f"https://{env_value}"
+
+INTEGRATION_URL = _resolve_url(os.getenv("INTEGRATION_URL", "http://integration-service:8000"))
 
 # ============================================================
 # FUZZY MATCHING HELPER
