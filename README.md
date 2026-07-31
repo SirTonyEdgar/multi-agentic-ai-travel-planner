@@ -56,10 +56,6 @@ Lima layanan berjalan independen dalam container terpisah (Docker Compose). Seti
    - API Gateway: http://localhost:8080
    - Dokumentasi API tiap service: `http://localhost:<port>/docs` (Swagger, otomatis dari FastAPI)
 
-## Deploy gratis ke Render
-
-Lihat panduan langkah demi langkah di [DEPLOY.md](./DEPLOY.md). Repo ini sudah menyertakan `render.yaml` (Render Blueprint) yang mendefinisikan ketujuh service sekaligus.
-
 ## Batasan
 
 Sesuai cakupan Tugas Akhir: backend memakai data simulasi (Mock API), bukan API komersial pihak ketiga; tidak ada eksekusi pemesanan/pembayaran nyata; cakupan destinasi terbatas pada tiga kota (Bali, Lombok, Yogyakarta).
