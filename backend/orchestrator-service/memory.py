@@ -5,6 +5,7 @@ from chromadb.config import Settings
 
 CHROMA_HOST = os.getenv("CHROMA_HOST", "chromadb")
 CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8000"))
+CHROMA_SSL = os.getenv("CHROMA_SSL", "false").lower() == "true"
 COLLECTION_NAME = "travel_conversations"
 MAX_WINDOW = 5  # sliding window 5 interaksi terakhir
 TTL_SECONDS = 86400  # 24 jam
@@ -13,6 +14,7 @@ def get_chroma_client():
     return chromadb.HttpClient(
         host=CHROMA_HOST,
         port=CHROMA_PORT,
+        ssl=CHROMA_SSL,
         settings=Settings(anonymized_telemetry=False)
     )
 

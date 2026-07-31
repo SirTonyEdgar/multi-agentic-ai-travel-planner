@@ -4,7 +4,7 @@ import Button from '../components/ui/Button';
 import { ArrowLeft, ShieldCheck, CreditCard, Building2, Wallet, ChevronRight, CheckCircle2 } from 'lucide-react';
 import './PesanPage.css';
 
-const JALAN_URL = 'http://localhost:5173';
+const JALAN_URL = import.meta.env.VITE_JALAN_URL || 'http://localhost:5173';
 
 const PAYMENT_METHODS = [
   { id: 'transfer', label: 'Transfer Bank', icon: Building2, desc: 'BCA, Mandiri, BNI, BRI' },

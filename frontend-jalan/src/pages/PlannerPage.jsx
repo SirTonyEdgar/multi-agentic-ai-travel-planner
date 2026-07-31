@@ -8,7 +8,7 @@ import ItineraryTimeline from '../components/ui/ItineraryTimeline';
 import { Send, ArrowLeft, RotateCcw, Sparkles, MessageSquare, Calendar } from 'lucide-react';
 import './PlannerPage.css';
 
-const PESAN_URL = 'http://localhost:5174';
+const PESAN_URL = import.meta.env.VITE_PESAN_URL || 'http://localhost:5174';
 
 // Parse AI response text into structured itinerary
 function parseItinerary(text) {
